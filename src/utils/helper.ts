@@ -1,4 +1,5 @@
 import { JwtPayload, sign, verify } from "jsonwebtoken";
+import { v4 } from "uuid";
 import bcrypt from "bcryptjs";
 import config from "./config";
 
@@ -22,5 +23,9 @@ export default class Helper {
   static comparePassword(password: string, hashed: string): boolean {
 
     return bcrypt.compareSync(password, hashed)
+  }
+
+  static UUID(): string {
+    return v4()
   }
 }

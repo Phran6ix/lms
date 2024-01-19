@@ -4,5 +4,6 @@ config()
 export default {
     PORT : process.env.PORT || 3000,
     JWT_SECRET: process.env.JWT_SECRET || "LMS jwt secret",
-    NODE_ENV : process.env.NODE_ENV || Constant.NODE_ENV.DEVELOPMENT
+    NODE_ENV : process.env.NODE_ENV || Constant.NODE_ENV.DEVELOPMENT,
+    MONGO_URI: process.env.MONGO_URI as string
 }

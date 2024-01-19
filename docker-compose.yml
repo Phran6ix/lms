@@ -1,0 +1,30 @@
+services: 
+  lms:
+    build: .
+    container_name: lms
+    depends_on: 
+      - mongo
+    env_file: .env
+    ports:
+      - "20017:20017"
+    networks: 
+      - my_lms
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    command: npm start
+
+  mongo: 
+    image: mongo:4.4.6
+    volumes:
+      - db-data:/data/db
+    ports: 
+      - "27017:27017"
+    networks:
+        - my_lms
+
+networks:
+  my_lms:
+
+volumes:
+  db-data:
