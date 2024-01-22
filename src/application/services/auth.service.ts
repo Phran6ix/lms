@@ -13,6 +13,11 @@ export default class UserService {
 
 	public async RegisterUser(payload: RegisterUserPayload): Promise<ResponseType> {
 		try {
+			const userExist = await this.repo.findUserByEmail(payload.email)
+			if(userExist) {
+				throw new HTTPException("User with Email already exists")
+			}
+
 			const newUser = await this.repo.createUser(payload)
 
 			return {
@@ -41,18 +46,19 @@ export default class UserService {
 		}
 
 
-		if(!Helper.comparePassword(user.password, payload.password)) {
+		if (!Helper.comparePassword(user.password, payload.password)) {
 			throw new HTTPException("Invalid password", 400)
 		}
-		if(!user.is_verified) {
+		if (!user.is_verified) {
 			throw new HTTPException("Your account is not verified", 403)
 		}
-		const token = Helper.signJWT({id: user.id})
+		const token = Helper.signJWT({ id: user.id })
 		return {
 			code: 200,
 			message: "You have successfully logged in",
-			data: {user, token}
+			data: { user, token }
 		}
-	
 	}
+
+
 }
