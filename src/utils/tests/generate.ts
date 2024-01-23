@@ -12,9 +12,9 @@ const getState = faker.location.state()
 const getAddress = faker.location.streetAddress()
 const getPassword = faker.internet.password({ length: 6, pattern: /[a-zA-Z]/ })
 const getUserName = faker.internet.userName()
-const getFakeId = faker.datatype.uuid()
+export const getFakeId = faker.string.uuid()
 
-function RegisterUserObject(overrides: [key: string]: string): RegisterUserPayload {
+export function CreateUserObject(overrides: { [key: string]: boolean | string | number} = {}): RegisterUserPayload {
     return {
         firstname: getFirstName,
         lastname: getLastname,
@@ -25,8 +25,8 @@ function RegisterUserObject(overrides: [key: string]: string): RegisterUserPaylo
         gender: getGender as Gender,
         address: getAddress,
         email: getEmail,
-        password: getPassword,
+        password: "fakepassword",
         username: getUserName,
-
+        ...overrides
     }
 }

@@ -1,5 +1,5 @@
 import { ResponseType } from "../../common/responseType";
-import HTTPException from "../../utils/exception";
+import HTTPException, { DuplicateError } from "../../utils/exception";
 import Helper from "../../utils/helper";
 import { RegisterUserPayload, UserSignInPayload } from "../../validations/user.validation";
 import { User } from "../entity/user";
@@ -14,11 +14,11 @@ export default class UserService {
 	public async RegisterUser(payload: RegisterUserPayload): Promise<ResponseType> {
 		try {
 			const userExist = await this.repo.findUserByEmail(payload.email)
-			if(userExist) {
-				throw new HTTPException("User with Email already exists")
+			if (userExist) {
+				throw DuplicateError("User with email already exist")
 			}
-
-			const newUser = await this.repo.createUser(payload)
+			const password = Helper.hashPassword(payload.password)
+			const newUser = await this.repo.createUser({...payload, password})
 
 			return {
 				code: 201,
@@ -46,7 +46,7 @@ export default class UserService {
 		}
 
 
-		if (!Helper.comparePassword(user.password, payload.password)) {
+		if (!Helper.comparePassword( payload.password, user.password)) {
 			throw new HTTPException("Invalid password", 400)
 		}
 		if (!user.is_verified) {

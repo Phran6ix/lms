@@ -12,5 +12,6 @@ export default class HTTPException extends Error {
         this.isOperational = true
         Error.captureStackTrace(this, this.constructor)
     }
-
 }
+
+export const DuplicateError = (message: string) => new HTTPException(message, 400)

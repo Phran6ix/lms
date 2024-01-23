@@ -1,4 +1,4 @@
 enum Gender  {
-    M= "M",
-    F="F"
+    M= "Male",
+    F="Female"
 }

@@ -1,6 +1,6 @@
 import { JwtPayload, sign, verify } from "jsonwebtoken";
 import { v4 } from "uuid";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import config from "./config";
 
 export default class Helper {
