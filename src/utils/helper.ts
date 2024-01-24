@@ -3,26 +3,30 @@ import { v4 } from "uuid";
 import bcrypt from "bcrypt";
 import config from "./config";
 
+export type VerifyJWTType = { token: string }
+export type TSignJWt = { id: string }
+export type THashpassword = {password: string}
+export type TCompareHashpassword = {password: string, hashed: string}
+
 export default class Helper {
-  static signJWT(payload: { id: string }): string {
+  static signJWT(payload: TSignJWt): string {
     return sign(payload, config.JWT_SECRET, { expiresIn: "1d" });
   }
 
-  static verifyJWT(token: string): JwtPayload {
+  static verifyJWT(payload: VerifyJWTType): JwtPayload {
     try {
-      return verify(token, config.JWT_SECRET) as JwtPayload;
+      return verify(payload.token, config.JWT_SECRET) as JwtPayload;
     } catch (error) {
       throw error;
     }
   }
 
-  static hashPassword(password: string): string {
-    return bcrypt.hashSync(password, 13)
+  static hashPassword(payload: THashpassword): string {
+    return bcrypt.hashSync(payload.password, 13)
   }
 
-  static comparePassword(password: string, hashed: string): boolean {
-
-    return bcrypt.compareSync(password, hashed)
+  static comparePassword(payload: TCompareHashpassword): boolean {
+    return bcrypt.compareSync(payload.password, payload.hashed)
   }
 
   static UUID(): string {
