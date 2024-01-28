@@ -2,25 +2,26 @@ import { IUser } from "../interfaces/userInterface"
 import { User, UserDTO } from "../entity/user"
 import { Mapper } from "../../common/mapper"
 
-export class UserMapper extends Mapper<IUser, User>{
-	// toDTO (user: User): UserDTO {
-	// 	return {
-	// 		id: user.id,
-	// 		firstname: user.firstname,
-	// 		lastname:user.lastname,
-	// 		middlename: user.middlename,
-	// 		username: user.username,
-	// 		address: {
-	// 			country: user.country,
-	// 			address: user.address,
-	// 			state: user.state			},
-	// 		email: user.email,
-	// 		gender: user.gender,
-	// 		phone_number: user.phone_number,
-	// 		age: user.age,
-	// 		verified: user.is_verified
-	// 	}
-	// }
+export class UserMapper extends Mapper<IUser, User, UserDTO>{
+	public toDTO(user: User): UserDTO {
+		return {
+			id: user.id,
+			firstname: user.firstname,
+			lastname: user.lastname,
+			middlename: user.middlename,
+			username: user.username,
+			address: {
+				country: user.country,
+				address: user.address,
+				state: user.state
+			},
+			email: user.email,
+			gender: user.gender,
+			phone_number: user.phone_number,
+			age: user.age,
+			verified: user.is_verified
+		}
+	}
 	public toPersistence(user: User): IUser {
 		return {
 			firstName: user.firstname,

@@ -21,7 +21,7 @@ export default abstract class BaseController {
         })
     }
 
-    sendErrorResponse(error: HTTPException):Response {
-        return globalErrorHandler(error, this.req, this.res)
+    sendErrorResponse(error: unknown):Response {
+        return globalErrorHandler(error as HTTPException, this.req, this.res)
     }
 }

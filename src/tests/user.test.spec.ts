@@ -91,7 +91,7 @@ describe("Authentication", () => {
             jest.spyOn(Helper, "comparePassword").mockReturnValue(true)
             await (expect(userService.UserSignIn(payload))).rejects.toThrow(HTTPException)
             expect(Helper.comparePassword).toHaveBeenCalled()
-            expect(Helper.comparePassword).toHaveBeenCalledWith({password: "password", hashed: "hashedpassword"})
+            expect(Helper.comparePassword).toHaveBeenCalledWith({ password: "password", hashed: "hashedpassword" })
             expect(Helper.comparePassword).toHaveBeenCalledTimes(1)
             expect(userRepository.findUserByEmail).toHaveBeenCalledTimes(1)
         })
@@ -106,7 +106,7 @@ describe("Authentication", () => {
             await expect(userService.UserSignIn(payload)).rejects.toThrow(HTTPException)
             expect(userRepository.findUserByEmail).toHaveBeenCalledTimes(1)
             expect(Helper.comparePassword).toHaveBeenCalledTimes(1)
-            expect(Helper.comparePassword).toHaveBeenCalledWith({password :"password",hashed:  userData.password })
+            expect(Helper.comparePassword).toHaveBeenCalledWith({ password: "password", hashed: userData.password })
 
         })
 
@@ -127,15 +127,15 @@ describe("Authentication", () => {
             expect((signedInUser.data as { token: unknown, user: unknown }).user).not.toBeUndefined()
             expect(typeof (signedInUser.data as { token: unknown, user: unknown }).user).toEqual(typeof userData)
             expect(typeof (signedInUser.data as { token: unknown, user: unknown }).token).toEqual("string")
-            
+
         })
     })
 
     describe("Verification", () => {
         test("it should return a 400 if a user is already verified", async () => {
-            const payload = {id: '1'}
+            const payload = { id: '1' }
 
-            const userObject = CreateUserObject({is_verified: true}) as User
+            const userObject = CreateUserObject({ is_verified: true }) as User
             jest.spyOn(userRepository, "findUserById").mockResolvedValue(userObject)
 
             await expect(userService.verifyUser(payload)).rejects.toThrow(HTTPException)
@@ -144,20 +144,53 @@ describe("Authentication", () => {
         })
 
         test("it should update the user verification field of the user", async () => {
-            const payload = {id: "1"}
+            const payload = { id: "1" }
 
-            const userObject = CreateUserObject({is_verified: false}) as User
+            const userObject = CreateUserObject({ is_verified: false }) as User
             jest.spyOn(userRepository, "findUserById").mockResolvedValueOnce(userObject)
-            jest.spyOn(userRepository, "updateUser").mockResolvedValueOnce({...userObject, is_verified: true})
-            
+            jest.spyOn(userRepository, "updateUser").mockResolvedValueOnce({ ...userObject, is_verified: true })
+
             const verified_user = await userService.verifyUser(payload)
 
             expect(userRepository.findUserById).toHaveBeenCalledTimes(1)
             expect(userRepository.findUserById).toHaveBeenCalledWith("1")
-            expect(userRepository.updateUser).toHaveBeenCalledWith("1", {isVerified: true})
-            expect(verified_user).toEqual({code: 200, message: expect.any(String), data: expect.anything()})
+            expect(userRepository.updateUser).toHaveBeenCalledWith("1", { isVerified: true })
+            expect(verified_user).toEqual({ code: 200, message: expect.any(String), data: expect.anything() })
 
         })
     })
+
+    describe("Change password", () => {
+        const payload = { id: "1", password: "password", new_password: "newPassword" }
+        const genUser = CreateUserObject() as User
+        test("Invalid password should throw a 404 error", async () => {
+            jest.spyOn(userRepository, "findUserById").mockResolvedValueOnce(genUser)
+            jest.spyOn(Helper, "comparePassword").mockReturnValue(false)
+
+            jest.spyOn(userRepository, "updateUser").mockResolvedValueOnce(genUser as User)
+
+            await expect(userService.changePassword(payload)).rejects.toThrow(HTTPException)
+            expect(userRepository.findUserById).toHaveBeenCalledWith("1")
+            expect(userRepository.updateUser).not.toHaveBeenCalled()
+
+        })
+        test("Password should be updated if input password is correct", async () => {
+            jest.spyOn(userRepository, "findUserById").mockResolvedValueOnce({ ...genUser , id: "1"})
+            jest.spyOn(Helper, "comparePassword").mockReturnValue(true)
+            let hashedpassword = "hashed password test"
+            jest.spyOn(Helper, "hashPassword").mockReturnValue(hashedpassword)
+    
+            jest.spyOn(userRepository, "updateUser").mockResolvedValueOnce({...genUser, password: hashedpassword})
+
+            const changePassword = await userService.changePassword(payload)
+
+            expect(userRepository.findUserById).toHaveBeenCalledWith("1")
+            expect(userRepository.findUserById).toHaveBeenCalledTimes(1)
+
+            expect(userRepository.updateUser).toHaveBeenCalledTimes(1)
+            expect(userRepository.updateUser).toHaveBeenCalledWith("1", {password: hashedpassword})
+        })
+    })
+
 })
 

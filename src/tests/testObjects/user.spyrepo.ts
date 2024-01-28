@@ -38,12 +38,12 @@ export class UserSpyRepo implements IUserRepo {
             }, 300)
         })
     }
-    findUserById(id: string): Promise<User | null> {
-        const user = this.users.find(users => users.id == id)
+    findUserById(id: string): Promise<User > {
+        const user = this.users.find(users => users.id == id) as User
 
         return new Promise(resolve => {
             setTimeout(() => {
-                resolve(user ? user : null)
+                resolve(user )
             }, 300)
         })
     }

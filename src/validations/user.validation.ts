@@ -25,3 +25,7 @@ export const UserSignInPayload = z.object({
 
 export type UserSignInPayload = z.TypeOf<typeof UserSignInPayload>
 
+export const ChangePasswordPayload = z.object({
+    password: z.string(),
+    new_password: z.string()
+}).refine(data => data.password != data.new_password, {message: "new password cannot be the same as old password"})

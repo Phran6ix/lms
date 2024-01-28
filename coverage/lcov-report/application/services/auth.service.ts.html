@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>89/89</span>
+                <span class='fraction'>111/111</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>17/17</span>
+                <span class='fraction'>19/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>89/89</span>
+                <span class='fraction'>111/111</span>
             </div>
         
             
@@ -152,7 +152,29 @@
 <a name='L87'></a><a href='#L87'>87</a>
 <a name='L88'></a><a href='#L88'>88</a>
 <a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -165,9 +187,10 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">3x</span>
@@ -226,6 +249,27 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -249,6 +293,7 @@ import { RegisterUserPayload, UserSignInPayload } from "../../validations/user.v
 import { User } from "../entity/user";
 import { IUserRepo } from "../repository/user.repository";
 &nbsp;
+export type TChangePassword = { id: string, password: string, new_password: string }
 export type TVerifyUser = { id: string }
 export default class UserService {
 	private readonly repo: IUserRepo;
@@ -266,7 +311,7 @@ export default class UserService {
 			}
 			const password = Helper.hashPassword({ password: payload.password })
 			const newUser = await this.repo.createUser({ ...payload, password })
-// await this.email.sendEmail({})
+			// await this.email.sendEmail({})
 			return {
 				code: 201,
 				message: "User has been created successfully",
@@ -314,7 +359,7 @@ export default class UserService {
 	public async verifyUser(payload: TVerifyUser): Promise&lt;ResponseType&gt; {
 		try {
 			const user = await this.repo.findUserById(payload.id)
-			if(user!.is_verified) {
+			if (user!.is_verified) {
 				throw new HTTPException("User is already verified", 400)
 			}
 &nbsp;
@@ -322,9 +367,30 @@ export default class UserService {
 			return {
 				code: 200,
 				message: "Your account has been activated",
-				data: { user : updateduser}
+				data: { user: updateduser }
 			}
 &nbsp;
+		} catch (error) {
+			throw error
+		}
+	}
+	public async changePassword(payload: TChangePassword): Promise&lt;ResponseType&gt; {
+		try {
+			const user = await this.repo.findUserById(payload.id)
+&nbsp;
+			console.log(user)
+			if (!Helper.comparePassword({ password: payload.password, hashed: user.password })) {
+				throw new HTTPException("Invalid password", 400)
+			}
+&nbsp;
+			const hashedpassword = Helper.hashPassword({ password: payload.new_password })
+			const updatedUser = await this.repo.updateUser(user.id, { password: hashedpassword })
+&nbsp;
+			return {
+				code: 200,
+				message: "User password has been changed successfully",
+				data: { user: updatedUser }
+			}
 		} catch (error) {
 			throw error
 		}
@@ -337,7 +403,7 @@ export default class UserService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-24T14:40:30.594Z
+                at 2024-01-26T13:21:21.058Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

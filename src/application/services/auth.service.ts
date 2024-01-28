@@ -6,8 +6,9 @@ import { RegisterUserPayload, UserSignInPayload } from "../../validations/user.v
 import { User } from "../entity/user";
 import { IUserRepo } from "../repository/user.repository";
 
+export type TChangePassword = { id: string, password: string, new_password: string }
 export type TVerifyUser = { id: string }
-export default class UserService {
+export default class AuthService {
 	private readonly repo: IUserRepo;
 	// email: IEmailService;
 	constructor(repo: IUserRepo, email_service?: IEmailService) {
@@ -23,7 +24,7 @@ export default class UserService {
 			}
 			const password = Helper.hashPassword({ password: payload.password })
 			const newUser = await this.repo.createUser({ ...payload, password })
-// await this.email.sendEmail({})
+			// await this.email.sendEmail({})
 			return {
 				code: 201,
 				message: "User has been created successfully",
@@ -71,7 +72,7 @@ export default class UserService {
 	public async verifyUser(payload: TVerifyUser): Promise<ResponseType> {
 		try {
 			const user = await this.repo.findUserById(payload.id)
-			if(user!.is_verified) {
+			if (user!.is_verified) {
 				throw new HTTPException("User is already verified", 400)
 			}
 
@@ -79,9 +80,29 @@ export default class UserService {
 			return {
 				code: 200,
 				message: "Your account has been activated",
-				data: { user : updateduser}
+				data: { user: updateduser }
 			}
 
+		} catch (error) {
+			throw error
+		}
+	}
+	public async changePassword(payload: TChangePassword): Promise<ResponseType> {
+		try {
+			const user = await this.repo.findUserById(payload.id)
+
+			if (!Helper.comparePassword({ password: payload.password, hashed: user.password })) {
+				throw new HTTPException("Invalid password", 400)
+			}
+
+			const hashedpassword = Helper.hashPassword({ password: payload.new_password })
+			const updatedUser = await this.repo.updateUser(user.id, { password: hashedpassword })
+
+			return {
+				code: 200,
+				message: "User password has been changed successfully",
+				data: { user: updatedUser }
+			}
 		} catch (error) {
 			throw error
 		}

@@ -3,7 +3,16 @@ import cors from 'cors'
 import config from './utils/config'
 import globalErrorHandler from './utils/globalErrorHandler'
 import connectMongoose from './services/mongooseConnection'
+import { IUser } from './application/interfaces/userInterface'
+import { User } from './application/entity/user'
 
+declare global {
+    namespace Express {
+        export interface Request {
+            user?: User
+        }
+    }
+}
 export default class ExpressApplication {
     constructor() {
         ExpressApplication.middleWares()

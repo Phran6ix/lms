@@ -8,7 +8,7 @@ export interface IUserRepo {
 	createUser(user: Partial<User>): Promise<User>;
 	findUserByEmail(email: string): Promise<User | null>
 	findUserByUsername(username: string): Promise<User | null>
-	findUserById(id: string): Promise<User | null>
+	findUserById(id: string): Promise<User>
 	fetchAllUser(filter: Partial<IUser>): Promise<User[]>
 	deleteUser(id: string): Promise<void>
 	updateUser(id: string, payload: Partial<IUser>): Promise<User>
@@ -52,11 +52,11 @@ export class UserRepository implements IUserRepo {
 			throw error
 		}
 	}
-	async findUserById(id: string): Promise<User | null> {
+	async findUserById(id: string): Promise<User> {
 		try {
-			const user = await this.model.findOne({ userId: id }).lean()
+			const user = await this.model.findOne({ userId: id }).lean() as IUser
 
-			return !!user ? new UserMapper().toDomain(user) : null
+			return new UserMapper().toDomain(user)
 		} catch (error) {
 			throw error
 		}
@@ -72,9 +72,9 @@ export class UserRepository implements IUserRepo {
 	async deleteUser(id: string): Promise<void> {
 		try {
 			const user = await this.findUserById(id)
-			await this.model.deleteOne({userId: user?.id})
+			await this.model.deleteOne({ userId: user?.id })
 		} catch (error) {
-		throw error	
+			throw error
 		}
 	}
 
