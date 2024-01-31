@@ -26,15 +26,13 @@ class AppMiddleware {
             if (!payload) {
                 return next(new HTTPException("Invalid or expired token", 401))
             }
-            const user = await this.userRepo.findUserById(payload.id)
-            if (!user) {
- u               return next(new HTTPException("An Error occured, please sign in again", 401))
-            }
 
-            req.user = user
+            req.userId = payload.id
             return next()
         } catch (error) {
             next(error)
         }
     }
 }
+
+export default AppMiddleware

@@ -16,7 +16,7 @@ export interface IUser {
 	gender: string;
 	isVerified: boolean;
 	phoneNumber: string;
-
+lastLogin: Date
 }
 
 export interface IUserDoc extends Document{}

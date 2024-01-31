@@ -13,7 +13,6 @@ type ControllerConstructor<T> = new (req: Request, res: Response, next: NextFunc
 type MethodOf<T> = {
     [K in keyof T]: T[K] extends (...args: any[]) => any ? K : never
 }[keyof T]
-
 export default class ApplicationRouter {
     private readonly _router: Router
 
@@ -22,9 +21,14 @@ export default class ApplicationRouter {
     }
 
     callRoute<T extends BaseController>(method: Methods, middleware: Array<any>, path: string, controller: ControllerConstructor<T>, controller_method: MethodOf<T>): Router {
-        return this._router[method](path, ...middleware, function(...x) {
+        console.log(path)
+        return this._router[method](path, ...middleware, function (...x)  {
             const instance = new controller(...x);
-            (instance[controller_method] as (...a: any[]) => any).call(instance);
+             (instance[controller_method] as (...a: any[]) => any).call(instance)
         })
+    }
+
+    getRoute() {
+        return this._router
     }
 }

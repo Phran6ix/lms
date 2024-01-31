@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
 import { IUser } from "../interfaces/userInterface";
 import Helper from "../../utils/helper";
+import { Gender } from "../../common/types";
 
 const userSchema = new Schema<IUser>({
 	userId: {
@@ -61,6 +62,9 @@ const userSchema = new Schema<IUser>({
 		index: true,
 		unique: true,
 		required: true
+	},
+	lastLogin: {
+		type: Date
 	}
 },
 	{

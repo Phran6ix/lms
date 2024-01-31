@@ -3,6 +3,7 @@ export type TEmailPayload = {
     subject: string,
     message: string,
     html?: string,
+    name: string
 }
 
 export interface IEmailService {

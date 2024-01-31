@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Gender } from "../common/types";
 
 export const RegisterUserPayload = z.object({
     firstname: z.string(),

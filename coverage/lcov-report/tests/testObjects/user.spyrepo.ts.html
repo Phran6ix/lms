@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50.74% </span>
+                <span class="strong">47.22% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>34/67</span>
+                <span class='fraction'>34/72</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50.74% </span>
+                <span class="strong">47.22% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>34/67</span>
+                <span class='fraction'>34/72</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -130,7 +130,12 @@
 <a name='L65'></a><a href='#L65'>65</a>
 <a name='L66'></a><a href='#L66'>66</a>
 <a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -194,6 +199,11 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -237,12 +247,12 @@ export class UserSpyRepo implements IUserRepo {
 <span class="cstat-no" title="statement not covered" >            }, 300)</span>
 <span class="cstat-no" title="statement not covered" >        })</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
-<span class="fstat-no" title="function not covered" >    findUserById(id: string): Promise&lt;User &gt; {</span>
+<span class="fstat-no" title="function not covered" >    findUserById(id: string): Promise&lt;User&gt; {</span>
 <span class="cstat-no" title="statement not covered" >        const user = this.users.find(users =&gt; users.id == id) as User</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >        return new Promise(resolve =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >            setTimeout(() =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >                resolve(user )</span>
+<span class="cstat-no" title="statement not covered" >                resolve(user)</span>
 <span class="cstat-no" title="statement not covered" >            }, 300)</span>
 <span class="cstat-no" title="statement not covered" >        })</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
@@ -261,7 +271,12 @@ export class UserSpyRepo implements IUserRepo {
 <span class="cstat-no" title="statement not covered" >        })</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="fstat-no" title="function not covered" >    updateUser(id: string, payload: Partial&lt;IUser&gt;): Promise&lt;User&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        throw new Error("Method not implemented.");</span>
+<span class="cstat-no" title="statement not covered" >        return new Promise(resolve =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >            setTimeout(() =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >                this.users.find(u =&gt; u.id) as User</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >            })</span>
+<span class="cstat-no" title="statement not covered" >        })</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -271,7 +286,7 @@ export class UserSpyRepo implements IUserRepo {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-26T13:21:21.058Z
+                at 2024-01-31T14:38:21.501Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -13,6 +13,7 @@ export interface User {
 	address: string;
 	phone_number: string;
 	state: string;
+	lastlogin: Date
 
 }
 
@@ -33,4 +34,5 @@ export interface UserDTO {
 		state: string;
 	}
 	phone_number: string;
+	lastlogin: string
 }

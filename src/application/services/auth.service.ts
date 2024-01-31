@@ -58,6 +58,7 @@ export default class AuthService {
 			if (!user.is_verified) {
 				throw new HTTPException("Your account is not verified", 403)
 			}
+			await this.repo.updateUser(user.id, { lastLogin: new Date() })
 			const token = Helper.signJWT({ id: user.id })
 			return {
 				code: 200,

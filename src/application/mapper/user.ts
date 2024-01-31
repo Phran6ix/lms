@@ -19,8 +19,10 @@ export class UserMapper extends Mapper<IUser, User, UserDTO>{
 			gender: user.gender,
 			phone_number: user.phone_number,
 			age: user.age,
-			verified: user.is_verified
+			verified: user.is_verified,
+			lastlogin: user.lastlogin.toDateString(),
 		}
+
 	}
 	public toPersistence(user: User): IUser {
 		return {
@@ -37,7 +39,8 @@ export class UserMapper extends Mapper<IUser, User, UserDTO>{
 			isVerified: user.is_verified,
 			state: user.state,
 			country: user.country,
-			address: user.address
+			address: user.address,
+			lastLogin: user.lastlogin,
 		}
 	}
 	public toDomain(user: IUser): User {
@@ -55,7 +58,8 @@ export class UserMapper extends Mapper<IUser, User, UserDTO>{
 			address: user.address.toString(),
 			state: user.state.toString(),
 			country: user.country.toString(),
-			username: user.userName.toString()
+			username: user.userName.toString(),
+			lastlogin: user.lastLogin
 		}
 	}
 }

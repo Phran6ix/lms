@@ -38,12 +38,12 @@ export class UserSpyRepo implements IUserRepo {
             }, 300)
         })
     }
-    findUserById(id: string): Promise<User > {
+    findUserById(id: string): Promise<User> {
         const user = this.users.find(users => users.id == id) as User
 
         return new Promise(resolve => {
             setTimeout(() => {
-                resolve(user )
+                resolve(user)
             }, 300)
         })
     }
@@ -62,6 +62,11 @@ export class UserSpyRepo implements IUserRepo {
         })
     }
     updateUser(id: string, payload: Partial<IUser>): Promise<User> {
-        throw new Error("Method not implemented.");
+        return new Promise(resolve => {
+            setTimeout(() => {
+                this.users.find(u => u.id) as User
+
+            })
+        })
     }
 }

@@ -112,10 +112,11 @@ describe("Authentication", () => {
 
         test("it should return a token if a user is verified and input correct password", async () => {
             const payload = { email: "example@email.com", password: "password" }
-            const userData = CreateUserObject({ id: 1, email: "example@email.com", password: "hpassword", is_verified: true })
+            const userData = CreateUserObject({ id: 1, email: "example@email.com", password: "hpassword", is_verified: true }) as User
             jest.spyOn(userRepository, "findUserByEmail").mockResolvedValueOnce(userData as User)
 
             jest.spyOn(Helper, "comparePassword").mockReturnValue(true)
+            jest.spyOn(userRepository, "updateUser").mockResolvedValueOnce(userData)
             const signedInUser = await userService.UserSignIn(payload)
 
             expect(signedInUser).toHaveProperty("code", 200)
@@ -123,6 +124,7 @@ describe("Authentication", () => {
             expect(signedInUser).toHaveProperty("data")
             expect(signedInUser.data).toHaveProperty("user")
             expect(signedInUser.data).toHaveProperty("token")
+            expect(userRepository.updateUser).toHaveBeenCalledWith(userData.id, {lastLogin: expect.any(Date)})
             expect((signedInUser.data as { token: unknown, user: unknown }).token).not.toBeUndefined()
             expect((signedInUser.data as { token: unknown, user: unknown }).user).not.toBeUndefined()
             expect(typeof (signedInUser.data as { token: unknown, user: unknown }).user).toEqual(typeof userData)
