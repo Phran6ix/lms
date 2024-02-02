@@ -5,7 +5,7 @@ import { Gender } from "../../common/types";
 
 const userSchema = new Schema<IUser>({
 	userId: {
-	type: String,
+		type: String,
 		index: true,
 		unique: true,
 		default: () => Helper.UUID()

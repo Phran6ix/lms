@@ -5,7 +5,7 @@ export interface User {
 	password: string;
 	middlename: string;
 	username: string;
-	is_verified: boolean;
+	is_verified?: boolean;
 	gender: string;
 	email: string;
 	age: number;
@@ -13,7 +13,7 @@ export interface User {
 	address: string;
 	phone_number: string;
 	state: string;
-	lastlogin: Date
+	lastlogin: Date | null
 
 }
 
@@ -34,5 +34,5 @@ export interface UserDTO {
 		state: string;
 	}
 	phone_number: string;
-	lastlogin: string
+	lastlogin: string | null
 }

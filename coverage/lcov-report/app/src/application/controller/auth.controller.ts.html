@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.22% </span>
+                <span class="strong">56.45% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>37/67</span>
+                <span class='fraction'>35/62</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.22% </span>
+                <span class="strong">56.45% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>37/67</span>
+                <span class='fraction'>35/62</span>
             </div>
         
             
@@ -125,13 +125,7 @@
 <a name='L60'></a><a href='#L60'>60</a>
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L63'></a><a href='#L63'>63</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -159,7 +153,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -178,7 +171,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -194,8 +186,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Request, Response, NextFunction } from "express";
 import AuthService from "../services/auth.service";
@@ -219,13 +209,11 @@ export default class AuthController extends BaseController {
 &nbsp;
 	public async HTTPRegisterUser(): Promise&lt;Response&gt; {
 		try {
-			console.log("in here")
 			const payload = RegisterUserPayload.safeParse(this.req.body)
 			if (!payload.success) {
 				throw new HTTPException(`Invalid input ${payload.error}`, 400)
 			}
-<span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >			console.log("Validationos payload" ,payload)</span></span>
-<span class="cstat-no" title="statement not covered" >			const service = await this.service.RegisterUser(payload.data)</span>
+<span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >			const service = await this.service.RegisterUser(payload.data)</span></span>
 <span class="cstat-no" title="statement not covered" >			return this.sendResponse(service)</span>
 		} catch (error) {
 			return this.sendErrorResponse(error)
@@ -239,7 +227,6 @@ export default class AuthController extends BaseController {
 <span class="cstat-no" title="statement not covered" >				throw new HTTPException(`Invalid input - ${payload.error}`, 400)</span>
 <span class="cstat-no" title="statement not covered" >			}</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >			console.log(payload)</span>
 <span class="cstat-no" title="statement not covered" >			const login = await this.service.UserSignIn(payload.data)</span>
 <span class="cstat-no" title="statement not covered" >			return this.sendResponse(login)</span>
 <span class="cstat-no" title="statement not covered" >		} catch (error) {</span>
@@ -254,7 +241,6 @@ export default class AuthController extends BaseController {
 <span class="cstat-no" title="statement not covered" >				throw new HTTPException(`Invalid input - ${payload.error}`, 400)</span>
 <span class="cstat-no" title="statement not covered" >			}</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >			console.log("payload", payload)</span>
 <span class="cstat-no" title="statement not covered" >			const response = await this.service.changePassword({id: this.req.userId, ...payload.data})</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >			return this.sendResponse(response)</span>
@@ -262,7 +248,6 @@ export default class AuthController extends BaseController {
 <span class="cstat-no" title="statement not covered" >			return this.sendErrorResponse(error)</span>
 <span class="cstat-no" title="statement not covered" >		}</span>
 <span class="cstat-no" title="statement not covered" >	}</span>
-&nbsp;
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -271,7 +256,7 @@ export default class AuthController extends BaseController {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-02-02T12:09:59.838Z
+                at 2024-02-02T20:39:58.741Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

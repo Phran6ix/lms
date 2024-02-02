@@ -2,6 +2,7 @@ export default abstract class Constant {
     public static NODE_ENV = {
         DEVELOPMENT: "development",
         PRODUCTION: "production",
+        TESTING: "test"
     }
     public static BACKEND_URL = "localhost:20019"
     public static SMTP_USER = "cab79e8f8f515f"

@@ -1,6 +1,7 @@
 import { IUser } from "../interfaces/userInterface"
 import { User, UserDTO } from "../entity/user"
 import { Mapper } from "../../common/mapper"
+import { ObjectId } from "mongodb"
 
 export class UserMapper extends Mapper<IUser, User, UserDTO>{
 	public toDTO(user: User): UserDTO {
@@ -19,8 +20,8 @@ export class UserMapper extends Mapper<IUser, User, UserDTO>{
 			gender: user.gender,
 			phone_number: user.phone_number,
 			age: user.age,
-			verified: user.is_verified,
-			lastlogin: user.lastlogin.toDateString(),
+			verified: user.is_verified as boolean,
+			lastlogin: user.lastlogin ? null : user!.lastlogin ,
 		}
 
 	}
@@ -40,7 +41,7 @@ export class UserMapper extends Mapper<IUser, User, UserDTO>{
 			state: user.state,
 			country: user.country,
 			address: user.address,
-			lastLogin: user.lastlogin,
+			lastLogin: !!user.lastlogin ? null : user.lastlogin,
 		}
 	}
 	public toDomain(user: IUser): User {
@@ -51,7 +52,7 @@ export class UserMapper extends Mapper<IUser, User, UserDTO>{
 			middlename: user.middleName.toString(),
 			is_verified: user.isVerified,
 			gender: user.gender,
-			id: user.userId.toString(),
+			id: (user.userId as unknown as ObjectId).toString(),
 			password: user.password,
 			email: user.email.toString(),
 			phone_number: user.phoneNumber,
