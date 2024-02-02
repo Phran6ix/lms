@@ -8,4 +8,4 @@ dotenv.config()
 //
 // ExpressApplication.startApp()
 //
-new ExpressApplication()
+export const app = new ExpressApplication().getApp()

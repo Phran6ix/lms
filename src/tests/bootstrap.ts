@@ -9,12 +9,13 @@
 //     console.log(url)
 //     await mongoose.connect(url)
 // })
+
+import { app } from "../../server"
+
 //
-// afterAll(async () => {
-//     await mongoose.connection.dropDatabase()
-//     await mongoose.connection.close()
-//     await mongoServer.stop()
-// })
+afterAll ( () => {
+    process.exit(1)
+})
 //
 // afterEach(async () => {
 //     const collections = mongoose.connection.collections

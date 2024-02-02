@@ -1,4 +1,3 @@
-import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 import config from "../utils/config";
 
@@ -8,16 +7,14 @@ const connectMongoose = async function() {
 
       let url: string
       if (config.NODE_ENV == 'test') {
-         const mongoServer = await MongoMemoryServer.create()
-         url = mongoServer.getUri()
+         url = config.MONGO_URI_TEST
       
       } else {
          url = config.MONGO_URI
       }
-      mongoose.connect(url).then(() => {
-         console.log("MongoDb connection successful")
-      })
-
+      console.log(url)
+      await mongoose.connect(url)
+      console.log("MongoDB connection is successful")
    } catch (error) {
       console.error(error)
       throw error

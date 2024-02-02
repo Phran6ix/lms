@@ -1,0 +1,25 @@
+networks:
+  test: 
+
+services:
+  app: 
+    build: .
+    command: npm test
+    depends_on:
+      - mongo_test
+    env_file: .env
+    volumes:
+      - ./:/app
+    networks:
+        - test
+  
+  mongo_test: 
+    image: mongo:4.4.6
+    volumes:
+      - db-data:/data-db
+    networks:
+        - test
+
+volumes:
+  db-data:
+

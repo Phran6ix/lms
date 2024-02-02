@@ -23,11 +23,14 @@ export default class ExpressApplication {
         this.errorHandler()
 
 
-        this.startApp()
+        // this.startApp()
     }
 
-    public static getApp(): Application {
-        return new ExpressApplication().app
+    // get getApp(): Application {
+    //     return this.app
+    // }
+    public getApp(): Application {
+        return this.app
     }
     private app: express.Application = express()
 

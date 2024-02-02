@@ -1,9 +1,8 @@
 import supertest from 'supertest'
-import ExpressApplication from '../..'
 import { RegisterUserPayload } from '../../validations/user.validation'
 import { getCountry, getEmail, getFirstName, getGender, getLastname, getMiddleName, getPassword, getState, getUserName } from '../../utils/tests/generate'
 import { Gender } from '../../common/types'
-
+import { app } from '../../../server'
 
 const userSignUpPayload: RegisterUserPayload = {
     firstname: getFirstName,
@@ -20,7 +19,6 @@ const userSignUpPayload: RegisterUserPayload = {
 }
 
 describe("Authentication", () => {
-    const app = ExpressApplication.getApp()
     describe("user sign up", () => {
         test("it should return 400 for invalid inputs", async () => {
             const { email, firstname, ...payload } = userSignUpPayload
