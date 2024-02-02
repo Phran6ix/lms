@@ -1,7 +1,7 @@
 import { Document } from 'mongoose'
 
 export interface IUser {
-	userId: string;
+	userId?: string;
 	_id?: string;
 	firstName: string;
 	lastName: string;
@@ -14,9 +14,9 @@ export interface IUser {
 	state: string;
 	country: string
 	gender: string;
-	isVerified: boolean;
+	isVerified?: boolean;
 	phoneNumber: string;
-lastLogin: Date
+lastLogin: Date | null
 }
 
 export interface IUserDoc extends Document{}

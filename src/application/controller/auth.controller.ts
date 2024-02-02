@@ -20,12 +20,10 @@ export default class AuthController extends BaseController {
 
 	public async HTTPRegisterUser(): Promise<Response> {
 		try {
-			console.log("in here")
 			const payload = RegisterUserPayload.safeParse(this.req.body)
 			if (!payload.success) {
 				throw new HTTPException(`Invalid input ${payload.error}`, 400)
 			}
-			console.log("Validationos payload" ,payload)
 			const service = await this.service.RegisterUser(payload.data)
 			return this.sendResponse(service)
 		} catch (error) {
@@ -40,7 +38,6 @@ export default class AuthController extends BaseController {
 				throw new HTTPException(`Invalid input - ${payload.error}`, 400)
 			}
 
-			console.log(payload)
 			const login = await this.service.UserSignIn(payload.data)
 			return this.sendResponse(login)
 		} catch (error) {
@@ -55,7 +52,6 @@ export default class AuthController extends BaseController {
 				throw new HTTPException(`Invalid input - ${payload.error}`, 400)
 			}
 
-			console.log("payload", payload)
 			const response = await this.service.changePassword({id: this.req.userId, ...payload.data})
 
 			return this.sendResponse(response)
@@ -63,5 +59,4 @@ export default class AuthController extends BaseController {
 			return this.sendErrorResponse(error)
 		}
 	}
-
 }

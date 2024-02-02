@@ -21,18 +21,20 @@ export default class ExpressApplication {
         this.middleWares()
         this.startRoutes()
         this.errorHandler()
+        // connectMongoose()
 
-
-        this.startApp()
+        // this.startApp()
     }
 
-    public static getApp(): Application {
-        return new ExpressApplication().app
+    // get getApp(): Application {
+    //     return this.app
+    // }
+    public getApp(): Application {
+        return this.app
     }
     private app: express.Application = express()
 
     startRoutes() {
-        console.log("We are int eh routes ")
         this.app.get("/api/health_check", (req: Request, res: Response) => {
             res.status(200).json({
                 status: "Success",
