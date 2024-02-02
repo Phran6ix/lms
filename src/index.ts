@@ -22,8 +22,8 @@ export default class ExpressApplication {
         this.startRoutes()
         this.errorHandler()
 
+
         this.startApp()
-        connectMongoose()
     }
 
     public static getApp(): Application {
@@ -64,8 +64,10 @@ export default class ExpressApplication {
     }
 
     startApp() {
-        this.app.listen(config.PORT, () => {
-            console.log(`Server has started on port ${config.PORT}`)
+        connectMongoose().then(() => {
+            this.app.listen(config.PORT, () => {
+                console.log(`Server has started on port ${config.PORT}`)
+            })
         })
     }
 

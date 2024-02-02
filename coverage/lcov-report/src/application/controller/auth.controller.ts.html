@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.22% </span>
+                <span class="strong">29.85% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>37/67</span>
+                <span class='fraction'>20/67</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/3</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/4</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.22% </span>
+                <span class="strong">29.85% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>37/67</span>
+                <span class='fraction'>20/67</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -142,28 +142,28 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -208,29 +208,29 @@ import HTTPException from "../../utils/exception";
 &nbsp;
 export default class AuthController extends BaseController {
 	private readonly service: AuthService
-	constructor(req: Request, res: Response, next: NextFunction) {
-		super(req, res, next)
-		this.req = req;
-		this.res = res;
-		this.next = next;
+<span class="fstat-no" title="function not covered" >	constructor(req: Request, res: Response, next: NextFunction) {</span>
+<span class="cstat-no" title="statement not covered" >		super(req, res, next)</span>
+<span class="cstat-no" title="statement not covered" >		this.req = req;</span>
+<span class="cstat-no" title="statement not covered" >		this.res = res;</span>
+<span class="cstat-no" title="statement not covered" >		this.next = next;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >		this.service = new AuthService(new UserRepository(userModel))</span>
+<span class="cstat-no" title="statement not covered" >	}</span>
 &nbsp;
-		this.service = new AuthService(new UserRepository(userModel))
-	}
-&nbsp;
-	public async HTTPRegisterUser(): Promise&lt;Response&gt; {
-		try {
-			console.log("in here")
-			const payload = RegisterUserPayload.safeParse(this.req.body)
-			if (!payload.success) {
-				throw new HTTPException(`Invalid input ${payload.error}`, 400)
-			}
-<span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >			console.log("Validationos payload" ,payload)</span></span>
+	public async <span class="fstat-no" title="function not covered" >HTTPRegisterUser(): Promise&lt;Response&gt; {</span>
+<span class="cstat-no" title="statement not covered" >		try {</span>
+<span class="cstat-no" title="statement not covered" >			console.log("in here")</span>
+<span class="cstat-no" title="statement not covered" >			const payload = RegisterUserPayload.safeParse(this.req.body)</span>
+<span class="cstat-no" title="statement not covered" >			if (!payload.success) {</span>
+<span class="cstat-no" title="statement not covered" >				throw new HTTPException(`Invalid input ${payload.error}`, 400)</span>
+<span class="cstat-no" title="statement not covered" >			}</span>
+<span class="cstat-no" title="statement not covered" >			console.log("Validationos payload" ,payload)</span>
 <span class="cstat-no" title="statement not covered" >			const service = await this.service.RegisterUser(payload.data)</span>
 <span class="cstat-no" title="statement not covered" >			return this.sendResponse(service)</span>
-		} catch (error) {
-			return this.sendErrorResponse(error)
-		}
-	}
+<span class="cstat-no" title="statement not covered" >		} catch (error) {</span>
+<span class="cstat-no" title="statement not covered" >			return this.sendErrorResponse(error)</span>
+<span class="cstat-no" title="statement not covered" >		}</span>
+<span class="cstat-no" title="statement not covered" >	}</span>
 &nbsp;
 	public async <span class="fstat-no" title="function not covered" >HTTPUserSign(): Promise&lt;Response&gt; {</span>
 <span class="cstat-no" title="statement not covered" >		try {</span>
@@ -271,7 +271,7 @@ export default class AuthController extends BaseController {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-31T15:13:16.016Z
+                at 2024-01-31T17:13:00.681Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

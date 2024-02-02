@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.05% </span>
+                <span class="strong">82.19% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>67/72</span>
+                <span class='fraction'>60/73</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.05% </span>
+                <span class="strong">82.19% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>67/72</span>
+                <span class='fraction'>60/73</span>
             </div>
         
             
@@ -135,20 +135,8 @@
 <a name='L70'></a><a href='#L70'>70</a>
 <a name='L71'></a><a href='#L71'>71</a>
 <a name='L72'></a><a href='#L72'>72</a>
-<a name='L73'></a><a href='#L73'>73</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -186,6 +174,17 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -202,7 +201,10 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -230,9 +232,7 @@ export default class ExpressApplication {
         this.middleWares()
         this.startRoutes()
         this.errorHandler()
-&nbsp;
         this.startApp()
-        connectMongoose()
     }
 &nbsp;
     public static getApp(): Application {
@@ -243,10 +243,10 @@ export default class ExpressApplication {
     startRoutes() {
         console.log("We are int eh routes ")
         this.app.get("/api/health_check", (req: Request, res: Response) =&gt; {
-            res.status(200).json({
-                status: "Success",
-                message: "API is live"
-            })
+<span class="cstat-no" title="statement not covered" >            res.status(200).json({</span>
+<span class="cstat-no" title="statement not covered" >                status: "Success",</span>
+<span class="cstat-no" title="statement not covered" >                message: "API is live"</span>
+<span class="cstat-no" title="statement not covered" >            })</span>
         })
         // const router = new ApplicationRouter()
         // this.app.use("/api",
@@ -273,8 +273,11 @@ export default class ExpressApplication {
     }
 &nbsp;
     startApp() {
-        this.app.listen(config.PORT, () =&gt; {
-            console.log(`Server has started on port ${config.PORT}`)
+        connectMongoose().then(() =&gt; {
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >            this.app.listen(config.PORT, () =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >                console.log(`Server has started on port ${config.PORT}`)</span>
+<span class="cstat-no" title="statement not covered" >            })</span>
         })
     }
 &nbsp;
@@ -286,7 +289,7 @@ export default class ExpressApplication {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-31T15:13:16.016Z
+                at 2024-01-31T17:13:00.681Z
             </div>
         <script src="../prettify.js"></script>
         <script>

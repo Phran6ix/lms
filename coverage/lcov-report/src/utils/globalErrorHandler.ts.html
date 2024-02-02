@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">27.77% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/18</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">16.66% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>1/6</span>
+                <span class='fraction'>5/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">27.77% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/18</span>
+                <span class='fraction'>5/18</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -87,38 +87,38 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {Request, Response} from 'express'
 import config from './config'
 import Constant from './constant'
 import HTTPException from './exception'
 &nbsp;
-export default function (error:  HTTPException,req:Request,  res: Response) {
-    console.log(error)
-    if(error.code == 11000) <span class="branch-0 cbranch-no" title="branch not covered" >{return res.status(403).json({</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export default function (error:  HTTPException,req:Request,  res: Response) {</span></span>
+<span class="cstat-no" title="statement not covered" >    console.log(error)</span>
+<span class="cstat-no" title="statement not covered" >    if(error.code == 11000) {return res.status(403).json({</span>
 <span class="cstat-no" title="statement not covered" >        status: "Error",</span>
 <span class="cstat-no" title="statement not covered" >        message: "User with email already exist"</span>
 <span class="cstat-no" title="statement not covered" >    })}</span>
-    return res.status(error.code<span class="branch-0 cbranch-no" title="branch not covered" > || 500)</span>.json({
-        status: error.code.toString().startsWith("4") ? "Error" <span class="branch-0 cbranch-no" title="branch not covered" >: "Fail",</span>
-        message: error.message<span class="branch-0 cbranch-no" title="branch not covered" > || "An Error Occured",</span>
-        stack: config.NODE_ENV == Constant.NODE_ENV.DEVELOPMENT <span class="branch-0 cbranch-no" title="branch not covered" >? error.stack </span>: null
-    
-    })
-}
+<span class="cstat-no" title="statement not covered" >    return res.status(error.code || 500).json({</span>
+<span class="cstat-no" title="statement not covered" >        status: error.code.toString().startsWith("4") ? "Error" : "Fail",</span>
+<span class="cstat-no" title="statement not covered" >        message: error.message || "An Error Occured",</span>
+<span class="cstat-no" title="statement not covered" >        stack: config.NODE_ENV == Constant.NODE_ENV.DEVELOPMENT ? error.stack : null</span>
+<span class="cstat-no" title="statement not covered" >    </span>
+<span class="cstat-no" title="statement not covered" >    })</span>
+<span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;
 &nbsp;</pre></td></tr></table></pre>
 
@@ -127,7 +127,7 @@ export default function (error:  HTTPException,req:Request,  res: Response) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-31T15:13:16.016Z
+                at 2024-01-31T17:13:00.681Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
