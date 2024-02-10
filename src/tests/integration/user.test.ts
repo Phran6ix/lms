@@ -30,6 +30,7 @@ describe("Authentication", () => {
     let server: Server
     beforeAll(async () => {
         await connectMongoose()
+        console.log("lll")
         server = app.listen(0)
         const users: Omit<User, "id"> = CreateUserModelObject()
         await InsertDocuments('User', [users])
