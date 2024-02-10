@@ -6,14 +6,18 @@ import HTTPException, { DuplicateError } from "../utils/exception";
 import { RegisterUserPayload, UserSignInPayload } from "../validations/user.validation";
 import { User } from "../application/entity/user";
 import Helper from "../utils/helper";
-import exp from "constants";
+import { UserMapper } from "../application/mapper/user";
+// import SMTPExpress from "../services/smtpexpress";
 
 describe("Authentication", () => {
     let userRepository: IUserRepo;
     let userService: UserService
+    // let email_service: SMTPExpress
     beforeEach(() => {
         userRepository = new UserSpyRepo([])
-        userService = new UserService(userRepository)
+        // email_service = new SMTPExpress()
+        userService = new UserService(userRepository) //, email_service)
+
     })
 
     describe("create user", () => {
@@ -32,13 +36,16 @@ describe("Authentication", () => {
             const userData: RegisterUserPayload = CreateUserObject()
 
 
-            jest.spyOn(userRepository, "createUser").mockResolvedValueOnce({ ...userData } as User)
+            const userDTO = new UserMapper().toPersistence({ ...userData as unknown as User })
+            jest.spyOn(userRepository, "createUser").mockResolvedValueOnce({ ...userData } as unknown as User)
+            // jest.spyOn(email_service, "sendEmail").mockResolvedValueOnce()
             const account = await userService.RegisterUser(userData)
 
 
-
-            expect(userRepository.createUser).toHaveBeenCalledWith({ ...userData, password: expect.any(String) })
+            expect(userRepository.createUser).toHaveBeenCalledWith({ ...userDTO, password: expect.any(String) })
+            // expect(email_service.sendEmail).toHaveBeenCalled()
             expect(account).toHaveProperty("code", 201)
+
         })
     })
 
@@ -124,7 +131,7 @@ describe("Authentication", () => {
             expect(signedInUser).toHaveProperty("data")
             expect(signedInUser.data).toHaveProperty("user")
             expect(signedInUser.data).toHaveProperty("token")
-            expect(userRepository.updateUser).toHaveBeenCalledWith(userData.id, {lastLogin: expect.any(Date)})
+            expect(userRepository.updateUser).toHaveBeenCalledWith(userData.id, { lastLogin: expect.any(Date) })
             expect((signedInUser.data as { token: unknown, user: unknown }).token).not.toBeUndefined()
             expect((signedInUser.data as { token: unknown, user: unknown }).user).not.toBeUndefined()
             expect(typeof (signedInUser.data as { token: unknown, user: unknown }).user).toEqual(typeof userData)
@@ -177,12 +184,12 @@ describe("Authentication", () => {
 
         })
         test("Password should be updated if input password is correct", async () => {
-            jest.spyOn(userRepository, "findUserById").mockResolvedValueOnce({ ...genUser , id: "1"})
+            jest.spyOn(userRepository, "findUserById").mockResolvedValueOnce({ ...genUser, id: "1" })
             jest.spyOn(Helper, "comparePassword").mockReturnValue(true)
             let hashedpassword = "hashed password test"
             jest.spyOn(Helper, "hashPassword").mockReturnValue(hashedpassword)
-    
-            jest.spyOn(userRepository, "updateUser").mockResolvedValueOnce({...genUser, password: hashedpassword})
+
+            jest.spyOn(userRepository, "updateUser").mockResolvedValueOnce({ ...genUser, password: hashedpassword })
 
             const changePassword = await userService.changePassword(payload)
 
@@ -190,7 +197,7 @@ describe("Authentication", () => {
             expect(userRepository.findUserById).toHaveBeenCalledTimes(1)
 
             expect(userRepository.updateUser).toHaveBeenCalledTimes(1)
-            expect(userRepository.updateUser).toHaveBeenCalledWith("1", {password: hashedpassword})
+            expect(userRepository.updateUser).toHaveBeenCalledWith("1", { password: hashedpassword })
         })
     })
 

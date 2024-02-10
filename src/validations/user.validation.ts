@@ -12,7 +12,8 @@ export const RegisterUserPayload = z.object({
     password: z.string().min(6).regex(new RegExp(/[a-zA-z0-9]/)),
     age: z.number().min(16),
     email: z.string().email(),
-    gender: z.nativeEnum(Gender)
+    gender: z.nativeEnum(Gender),
+    phone_number: z.string()
 })
 
 export type RegisterUserPayload = z.TypeOf<typeof RegisterUserPayload>

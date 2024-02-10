@@ -13,7 +13,7 @@ class SMTPExpress extends BaseEmailService implements IEmailService {
    }
    public async sendEmail(payload: TEmailPayload): Promise<void> {
       try {
-         const mailOptions :SendMailOptions= {
+         const mailOptions: SendMailOptions = {
             subject: payload.subject,
             message: payload.message,
             sender: {
@@ -24,12 +24,13 @@ class SMTPExpress extends BaseEmailService implements IEmailService {
                name: payload.name,
                email: payload.email
             }
-         } 
+         }
 
-         await this.mailclient.sendApi.sendMail(mailOptions)
+         const message = await this.mailclient.sendApi.sendMail(mailOptions)
+         console.log(message)
          return
       } catch (error) {
-        throw error 
+         throw error
       }
    }
 

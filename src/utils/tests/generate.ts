@@ -15,23 +15,25 @@ export const getAddress = faker.location.streetAddress()
 export const getPassword = faker.internet.password({ length: 6, pattern: /[a-zA-Z]/ })
 export const getUserName = faker.internet.userName()
 export const getFakeId = faker.string.uuid()
-export const getPhone = faker.phone.number()
+export const getPhone = faker.phone.number().toString()
 
-export function CreateUserModelObject(): IUser {
+console.log("PHONE ---=-=-=-", getPhone)
+
+export function CreateUserModelObject(): Omit<User ,"id"> {
     return {
-        firstName: getFirstName,
-        lastName: getLastname,
+        firstname: getFirstName,
+        lastname: getLastname,
         age: 20,
         gender: Gender.F,
-        middleName: getMiddleName,
-        userName: getUserName,
+        middlename: getMiddleName,
+        username: getUserName,
         email: getEmail,
         password: getPassword,
         country: getCountry,
         state: getState,
-        phoneNumber: getPhone,
+        phone_number: getPhone,
         address: getAddress,
-        lastLogin: null
+        lastlogin: null
     }
 }
 export function CreateUserObject(overrides: { [key: string]: boolean | string | number } = {}): RegisterUserPayload {
@@ -47,6 +49,7 @@ export function CreateUserObject(overrides: { [key: string]: boolean | string | 
         email: getEmail,
         password: "fakepassword",
         username: getUserName,
+        phone_number: getPhone,
         ...overrides
     }
 }

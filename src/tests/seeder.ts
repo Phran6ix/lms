@@ -13,7 +13,6 @@ export async function InsertDocuments(collection: string, payload: any[]): Promi
     try {
         const db = await connectMongo()
         const col = db.collection(collection)
-        console.log("This is the orn",col)
         const insertedDoc = await col.insertMany(payload)
         return insertedDoc
     } catch (error) {
