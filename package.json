@@ -9,6 +9,7 @@
     "test:integration": "NODE_ENV=test jest --testNamePattern='.test'"
   },
   "author": "Francs",
+  "test": "module",
   "license": "ISC",
   "dependencies": {
     "@types/express-session": "^1.17.7",

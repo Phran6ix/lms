@@ -9,7 +9,6 @@ const route = new ApplicationRouter()
 const middleware = new AppMiddleware(new UserRepository(userModel))
 
 // route.callRoute(Methods.POST, [], "/auth/register", AuthController, "HTTPRegisterUser")
-// route.callRoute(Methods.POST, [], "/auth/login", AuthController, "HTTPUserSign")
 // route.callRoute(Methods.PATCH, [middleware.AuthorizedRoute], "/auth/change_password", AuthController, "HTTPChangePassword")
 // export default route.getRoute()
 // const router = Router()
@@ -19,4 +18,5 @@ const middleware = new AppMiddleware(new UserRepository(userModel))
 const router = Router()
 
 router.post("/auth/register", (...x) => new AuthController(...x).HTTPRegisterUser())
+route.callRoute(Methods.POST, [], "/auth/login", AuthController, "HTTPUserSign")
 export default router

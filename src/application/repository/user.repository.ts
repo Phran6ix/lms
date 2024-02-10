@@ -5,7 +5,7 @@ import { IUser } from "../interfaces/userInterface";
 import { UserMapper } from "../mapper/user";
 
 export interface IUserRepo {
-	createUser(user: Partial<User>): Promise<User>;
+	createUser(user: Partial<IUser>): Promise<User>;
 	findUserByEmail(email: string): Promise<User | null>
 	findUserByUsername(username: string): Promise<User | null>
 	findUserById(id: string): Promise<User>
@@ -26,7 +26,7 @@ export class UserRepository implements IUserRepo {
 			throw error
 		}
 	}
-	async createUser(user: Partial<User>): Promise<User> {
+	async createUser(user: Partial<IUser>): Promise<User> {
 		try {
 			const newUser = await this.model.create({ ...user })
 

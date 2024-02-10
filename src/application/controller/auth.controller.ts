@@ -5,6 +5,7 @@ import BaseController from "../../common/BaseController";
 import userModel from "../database/userModel";
 import { ChangePasswordPayload, RegisterUserPayload, UserSignInPayload } from "../../validations/user.validation";
 import HTTPException from "../../utils/exception";
+import SMTPExpress from "../../services/smtpexpress";
 
 
 export default class AuthController extends BaseController {
@@ -15,7 +16,7 @@ export default class AuthController extends BaseController {
 		this.res = res;
 		this.next = next;
 
-		this.service = new AuthService(new UserRepository(userModel))
+		this.service = new AuthService(new UserRepository(userModel)) //, new SMTPExpress())
 	}
 
 	public async HTTPRegisterUser(): Promise<Response> {
@@ -25,6 +26,7 @@ export default class AuthController extends BaseController {
 				throw new HTTPException(`Invalid input ${payload.error}`, 400)
 			}
 			const service = await this.service.RegisterUser(payload.data)
+			console.log("Service", service)
 			return this.sendResponse(service)
 		} catch (error) {
 			return this.sendErrorResponse(error)

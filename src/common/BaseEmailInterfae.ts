@@ -7,11 +7,11 @@ export type TEmailPayload = {
 }
 
 export interface IEmailService {
-    sendEmail(payload: TEmailPayload): void
+    sendEmail(payload: TEmailPayload): Promise<void>
 }
 
 abstract class BaseEmailService implements IEmailService{
-    sendEmail(payload: TEmailPayload) : void {}
+    async sendEmail(payload: TEmailPayload) : Promise<void> {}
 }
 
 export default BaseEmailService
