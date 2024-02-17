@@ -7,16 +7,13 @@ import { RegisterUserPayload, UserSignInPayload } from "../validations/user.vali
 import { User } from "../application/entity/user";
 import Helper from "../utils/helper";
 import { UserMapper } from "../application/mapper/user";
-import SMTPExpress from "../services/smtpexpress";
 
 describe("Authentication", () => {
     let userRepository: IUserRepo;
     let userService: UserService
-    let email_service: SMTPExpress
     beforeEach(() => {
         userRepository = new UserSpyRepo([])
-        email_service = new SMTPExpress()
-        userService = new UserService(userRepository, email_service)
+        userService = new UserService(userRepository)
 
     })
 
@@ -37,16 +34,13 @@ describe("Authentication", () => {
             // const userData: Omit<User, "id"> = CreateUserModelObject()
             const userData: RegisterUserPayload = CreateUserObject()
 
-            console.log("userDataSpec", userData)
             const userDTO = new UserMapper().toPersistence({ ...userData as unknown as User })
 
             jest.spyOn(userRepository, "createUser").mockResolvedValueOnce(userData as User)
-            jest.spyOn(email_service, "sendEmail").mockResolvedValueOnce()
             const account = await userService.RegisterUser(userData as RegisterUserPayload)
 
 
             expect(userRepository.createUser).toHaveBeenCalledWith({ ...userDTO, password: expect.any(String) })
-            expect(email_service.sendEmail).toHaveBeenCalled()
             expect(account).toHaveProperty("code", 201)
 
         })

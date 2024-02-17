@@ -28,6 +28,7 @@ export default class AuthController extends BaseController {
 			const service = await this.service.RegisterUser(payload.data)
 			return this.sendResponse(service)
 		} catch (error) {
+			console.log("An Error occured here", error)
 			return this.sendErrorResponse(error)
 		}
 	}

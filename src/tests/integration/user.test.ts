@@ -18,7 +18,6 @@ describe("Authentication", () => {
     let users: Omit<User, "id">
     beforeAll(async () => {
         await connectMongoose()
-        console.log("lll")
         server = app.listen(0)
         users = CreateUserModelObject()
         await InsertDocuments('User', [users])
@@ -27,7 +26,6 @@ describe("Authentication", () => {
         test("it should return 400 for invalid inputs", async () => {
             const { email, firstname, ...payload } = userSignUpPayload
             const response = await supertest(app).post("/v1/auth/register").set("content-Type", "application/json").send(payload)
-            // console.log(response)
             expect(response.status).toBe(400)
             expect(response.body).toHaveProperty("message")
         })
@@ -50,7 +48,6 @@ describe("Authentication", () => {
             test("it should return 400 if username already exists", async () => {
                 const userObj = CreateUserObject({ username: users.username })
                 
-                console.log("users" ,users, userObj)
                 const response = await supertest(app).post("/v1/auth/register").set("Content-Type", "application/json").send(userObj)
 
                 expect(response.status).toBe(400)
