@@ -1,5 +1,6 @@
 import { IEmailService, TEmailPayload } from "../../common/BaseEmailInterfae";
 import { ResponseType } from "../../common/responseType";
+import events from "../../services/events";
 import HTTPException, { DuplicateError } from "../../utils/exception";
 import Helper from "../../utils/helper";
 import { RegisterUserPayload, UserSignInPayload } from "../../validations/user.validation";
@@ -11,15 +12,12 @@ export type TChangePassword = { id: string, password: string, new_password: stri
 export type TVerifyUser = { id: string }
 export default class AuthService {
 	private readonly repo: IUserRepo;
-	// private email: IEmailService;
-	constructor(repo: IUserRepo, email_service?: IEmailService) {
+	constructor(repo: IUserRepo) {
 		this.repo = repo
-		// this.email = email_service
 	}
 
 	public async RegisterUser(payload: RegisterUserPayload): Promise<ResponseType> {
 		try {
-			console.log("Sign up service")
 			const userExist = await this.repo.findUserByEmail(payload.email)
 			if (userExist) {
 				throw DuplicateError("User with email already exist")
@@ -27,16 +25,16 @@ export default class AuthService {
 			const password = Helper.hashPassword({ password: payload.password })
 			const userDTO = new UserMapper().toPersistence({ ...payload as unknown as User })
 
-			console.log("payload", payload)
-			console.log("userdto", userDTO)
 			const newUser = await this.repo.createUser({ ...userDTO, password })
+
 			const emailPayload: TEmailPayload = {
 				email: newUser.email,
 				subject: "One-Time Password",
 				message: `The otp will be up and running soon`,
-				name: newUser.firstname + newUser.lastname
+				name: newUser.firstname + " " + newUser.lastname
 			}
 			// await this.email.sendEmail({ ...emailPayload })
+			events.emit("sendEmail", emailPayload)
 			return {
 				code: 201,
 				message: "User has been created successfully",

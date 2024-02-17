@@ -1,6 +1,6 @@
 import supertest from 'supertest'
 import { RegisterUserPayload } from '../../validations/user.validation'
-import { CreateUserModelObject, getCountry, getEmail, getFirstName, getGender, getLastname, getMiddleName, getPassword, getPhone, getState, getUserName } from '../../utils/tests/generate'
+import { CreateUserModelObject, CreateUserObject, getCountry, getEmail, getFirstName, getGender, getLastname, getMiddleName, getPassword, getPhone, getState, getUserName } from '../../utils/tests/generate'
 import { Gender } from '../../common/types'
 import { app } from '../../../server'
 import { Server } from 'http'
@@ -11,35 +11,21 @@ import { IUser } from '../../application/interfaces/userInterface'
 import userModel from '../../application/database/userModel'
 import { User } from '../../application/entity/user'
 
-const userSignUpPayload: RegisterUserPayload = {
-    firstname: getFirstName,
-    lastname: getLastname,
-    middlename: getMiddleName,
-    password: getPassword,
-    gender: Gender.F,
-    country: getCountry,
-    address: getState,
-    age: 22,
-    email: getEmail,
-    username: getUserName,
-    state: getState,
-    phone_number: getPhone
-}
+const userSignUpPayload: RegisterUserPayload = CreateUserObject()
 
 describe("Authentication", () => {
     let server: Server
+    let users: Omit<User, "id">
     beforeAll(async () => {
         await connectMongoose()
-        console.log("lll")
         server = app.listen(0)
-        const users: Omit<User, "id"> = CreateUserModelObject()
+        users = CreateUserModelObject()
         await InsertDocuments('User', [users])
     })
     describe("user sign up", () => {
         test("it should return 400 for invalid inputs", async () => {
             const { email, firstname, ...payload } = userSignUpPayload
             const response = await supertest(app).post("/v1/auth/register").set("content-Type", "application/json").send(payload)
-            // console.log(response)
             expect(response.status).toBe(400)
             expect(response.body).toHaveProperty("message")
         })
@@ -47,8 +33,26 @@ describe("Authentication", () => {
         test("it should return 201 for valid inputs ", async () => {
             const response = await supertest(app).post("/v1/auth/register").set("content-Type", "application/json").send(userSignUpPayload)
 
-            console.log(response.body)
             expect(response.status).toBe(201)
+        })
+
+        describe("Duplicate user", () => {
+            test("it should return 400 if email already exists", async () => {
+                const userObj = CreateUserObject({ email: users.email })
+                const response = await supertest(app).post("/v1/auth/register").set("Content-Type", "application/json").send(userObj)
+
+                expect(response.status).toBe(400)
+                expect(response.body.message).toBe("User with email already exist")
+            })
+
+            test("it should return 400 if username already exists", async () => {
+                const userObj = CreateUserObject({ username: users.username })
+                
+                const response = await supertest(app).post("/v1/auth/register").set("Content-Type", "application/json").send(userObj)
+
+                expect(response.status).toBe(400)
+                expect(response.body.message).toBe("User with email already exist")
+            })
         })
     })
 

@@ -16,7 +16,7 @@ export default class AuthController extends BaseController {
 		this.res = res;
 		this.next = next;
 
-		this.service = new AuthService(new UserRepository(userModel)) //, new SMTPExpress())
+		this.service = new AuthService(new UserRepository(userModel), new SMTPExpress())
 	}
 
 	public async HTTPRegisterUser(): Promise<Response> {
@@ -26,9 +26,9 @@ export default class AuthController extends BaseController {
 				throw new HTTPException(`Invalid input ${payload.error}`, 400)
 			}
 			const service = await this.service.RegisterUser(payload.data)
-			console.log("Service", service)
 			return this.sendResponse(service)
 		} catch (error) {
+			console.log("An Error occured here", error)
 			return this.sendErrorResponse(error)
 		}
 	}
@@ -50,11 +50,11 @@ export default class AuthController extends BaseController {
 	public async HTTPChangePassword(): Promise<Response> {
 		try {
 			const payload = ChangePasswordPayload.safeParse(this.req.body)
-			if(!payload.success) {
+			if (!payload.success) {
 				throw new HTTPException(`Invalid input - ${payload.error}`, 400)
 			}
 
-			const response = await this.service.changePassword({id: this.req.userId, ...payload.data})
+			const response = await this.service.changePassword({ id: this.req.userId, ...payload.data })
 
 			return this.sendResponse(response)
 		} catch (error) {

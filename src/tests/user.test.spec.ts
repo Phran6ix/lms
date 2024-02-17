@@ -1,31 +1,29 @@
 import UserService from "../application/services/auth.service";
 import { IUserRepo, UserRepository } from "../application/repository/user.repository";
 import { UserSpyRepo } from "./testObjects/user.spyrepo";
-import { CreateUserObject, getFakeId } from "../utils/tests/generate";
+import { CreateUserModelObject, CreateUserObject, getFakeId } from "../utils/tests/generate";
 import HTTPException, { DuplicateError } from "../utils/exception";
 import { RegisterUserPayload, UserSignInPayload } from "../validations/user.validation";
 import { User } from "../application/entity/user";
 import Helper from "../utils/helper";
 import { UserMapper } from "../application/mapper/user";
-// import SMTPExpress from "../services/smtpexpress";
 
 describe("Authentication", () => {
     let userRepository: IUserRepo;
     let userService: UserService
-    // let email_service: SMTPExpress
     beforeEach(() => {
         userRepository = new UserSpyRepo([])
-        // email_service = new SMTPExpress()
-        userService = new UserService(userRepository) //, email_service)
+        userService = new UserService(userRepository)
 
     })
 
     describe("create user", () => {
         test("it should throw an HTTPException when user email already exists", async () => {
             const existingUser = CreateUserObject()
-            const account = await userService.RegisterUser(existingUser)
+            const exisitingUserObject = await userRepository.createUser({ ...existingUser })
             const newUser = CreateUserObject({ email: existingUser.email })
 
+            jest.spyOn(userRepository, "findUserByEmail").mockResolvedValueOnce({ ...exisitingUserObject })
             jest.spyOn(userRepository, "createUser")
 
             await expect(userService.RegisterUser(newUser)).rejects.toThrow(HTTPException)
@@ -33,17 +31,16 @@ describe("Authentication", () => {
         })
 
         test("it should successfully create a new user", async () => {
+            // const userData: Omit<User, "id"> = CreateUserModelObject()
             const userData: RegisterUserPayload = CreateUserObject()
 
-
             const userDTO = new UserMapper().toPersistence({ ...userData as unknown as User })
-            jest.spyOn(userRepository, "createUser").mockResolvedValueOnce({ ...userData } as unknown as User)
-            // jest.spyOn(email_service, "sendEmail").mockResolvedValueOnce()
-            const account = await userService.RegisterUser(userData)
+
+            jest.spyOn(userRepository, "createUser").mockResolvedValueOnce(userData as User)
+            const account = await userService.RegisterUser(userData as RegisterUserPayload)
 
 
             expect(userRepository.createUser).toHaveBeenCalledWith({ ...userDTO, password: expect.any(String) })
-            // expect(email_service.sendEmail).toHaveBeenCalled()
             expect(account).toHaveProperty("code", 201)
 
         })

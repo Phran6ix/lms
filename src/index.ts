@@ -24,6 +24,7 @@ export default class ExpressApplication {
         // connectMongoose()
 
         // this.startApp()
+        this.app.use(globalErrorHandler)
     }
 
     // get getApp(): Application {
