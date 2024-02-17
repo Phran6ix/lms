@@ -12,6 +12,8 @@ class SMTPExpress extends BaseEmailService implements IEmailService {
 
    }
    public async sendEmail(payload: TEmailPayload): Promise<void> {
+      console.log("payload", payload)
+      console.log("sender deets", Constant.SENDER_NAME, Constant.SENDER_EMAIL)
       try {
          const mailOptions: SendMailOptions = {
             subject: payload.subject,
@@ -27,7 +29,7 @@ class SMTPExpress extends BaseEmailService implements IEmailService {
          }
 
          const message = await this.mailclient.sendApi.sendMail(mailOptions)
-         console.log(message)
+         console.log("sendapi", message)
          return
       } catch (error) {
          throw error

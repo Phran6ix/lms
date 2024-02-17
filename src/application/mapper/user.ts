@@ -46,20 +46,20 @@ export class UserMapper extends Mapper<IUser, User, UserDTO>{
 	}
 	public toDomain(user: IUser): User {
 		return {
-			firstname: user.firstName.toString(),
-			lastname: user.lastName.toString(),
+			firstname: user.firstName,
+			lastname: user.lastName,
 			age: user.age,
-			middlename: user.middleName.toString(),
+			middlename: user.middleName,
 			is_verified: user.isVerified,
 			gender: user.gender,
-			id: (user.userId as unknown as ObjectId).toString(),
+			id: (user.userId as unknown as string),
 			password: user.password,
-			email: user.email.toString(),
+			email: user.email,
 			phone_number: user.phoneNumber,
-			address: user.address.toString(),
-			state: user.state.toString(),
-			country: user.country.toString(),
-			username: user.userName.toString(),
+			address: user.address,
+			state: user.state,
+			country: user.country,
+			username: user.userName,
 			lastlogin: user.lastLogin
 		}
 	}

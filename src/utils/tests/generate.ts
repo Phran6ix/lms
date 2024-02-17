@@ -17,7 +17,6 @@ export const getUserName = faker.internet.userName()
 export const getFakeId = faker.string.uuid()
 export const getPhone = faker.phone.number().toString()
 
-console.log("PHONE ---=-=-=-", getPhone)
 
 export function CreateUserModelObject(): Omit<User ,"id"> {
     return {

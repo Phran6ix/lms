@@ -28,6 +28,7 @@ export class UserRepository implements IUserRepo {
 	}
 	async createUser(user: Partial<IUser>): Promise<User> {
 		try {
+			console.log("the expected", user)
 			const newUser = await this.model.create({ ...user })
 
 			return new UserMapper().toDomain(newUser)

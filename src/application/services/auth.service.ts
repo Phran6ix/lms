@@ -11,32 +11,32 @@ export type TChangePassword = { id: string, password: string, new_password: stri
 export type TVerifyUser = { id: string }
 export default class AuthService {
 	private readonly repo: IUserRepo;
-	// private email: IEmailService;
-	constructor(repo: IUserRepo, email_service?: IEmailService) {
+	private email: IEmailService;
+	constructor(repo: IUserRepo, email_service: IEmailService) {
 		this.repo = repo
-		// this.email = email_service
+		this.email = email_service
 	}
 
 	public async RegisterUser(payload: RegisterUserPayload): Promise<ResponseType> {
 		try {
-			console.log("Sign up service")
+			console.log("register user paload", payload)
 			const userExist = await this.repo.findUserByEmail(payload.email)
+			console.log("UserExist", userExist)
 			if (userExist) {
 				throw DuplicateError("User with email already exist")
 			}
 			const password = Helper.hashPassword({ password: payload.password })
 			const userDTO = new UserMapper().toPersistence({ ...payload as unknown as User })
 
-			console.log("payload", payload)
-			console.log("userdto", userDTO)
 			const newUser = await this.repo.createUser({ ...userDTO, password })
+
 			const emailPayload: TEmailPayload = {
 				email: newUser.email,
 				subject: "One-Time Password",
 				message: `The otp will be up and running soon`,
-				name: newUser.firstname + newUser.lastname
+				name: newUser.firstname + " " + newUser.lastname
 			}
-			// await this.email.sendEmail({ ...emailPayload })
+			await this.email.sendEmail({ ...emailPayload })
 			return {
 				code: 201,
 				message: "User has been created successfully",
