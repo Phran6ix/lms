@@ -1,13 +1,14 @@
 export default class HTTPException extends Error {
-    code : number
+    statusCode : number
     message: string
     isOperational: boolean
     status: string
+    code: any
 
     constructor(message: string, code: number) {
         super(message)
         this.message = message
-        this.code = code
+        this.statusCode = code
         this.status = code.toString().startsWith("4") ? "Fail" : "Error"
         this.isOperational = true
         Error.captureStackTrace(this, this.constructor)

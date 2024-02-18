@@ -25,7 +25,7 @@ export async function DropCollection(collection: string): Promise<void> {
         const db = await connectMongo()
 
         const col = db.collection(collection)
-        await col.drop()
+        await col.deleteMany()
     } catch (error) {
         throw error
     }

@@ -39,7 +39,7 @@ export class UserRepository implements IUserRepo {
 	async findUserByEmail(email: string): Promise<User | null> {
 		try {
 			const user = await this.model.findOne({ email }).lean()
-
+console.log("MY USer wey dey stress", user)
 			return !!user ? new UserMapper().toDomain(user) : null
 		} catch (error) {
 			throw error

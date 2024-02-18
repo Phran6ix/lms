@@ -18,5 +18,6 @@ const middleware = new AppMiddleware(new UserRepository(userModel))
 const router = Router()
 
 router.post("/auth/register", (...x) => new AuthController(...x).HTTPRegisterUser())
-route.callRoute(Methods.POST, [], "/auth/login", AuthController, "HTTPUserSign")
+router.post("/auth/login", (...x) => new AuthController(...x).HTTPUserSign())
+// route.callRoute(Methods.POST, [], "/auth/login", AuthController, "HTTPUserSign")
 export default router

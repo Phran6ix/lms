@@ -19,6 +19,7 @@ export default class AuthService {
 	public async RegisterUser(payload: RegisterUserPayload): Promise<ResponseType> {
 		try {
 			const userExist = await this.repo.findUserByEmail(payload.email)
+			console.log("User Exist", userExist)
 			if (userExist) {
 				throw DuplicateError("User with email already exist")
 			}
@@ -35,6 +36,7 @@ export default class AuthService {
 			}
 			// await this.email.sendEmail({ ...emailPayload })
 			events.emit("sendEmail", emailPayload)
+			console.log("SErvice Over")
 			return {
 				code: 201,
 				message: "User has been created successfully",
