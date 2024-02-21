@@ -21,7 +21,7 @@ export default class AuthService {
 			const userExist = await this.repo.findUserByEmailOrUsername({email: payload.email, username: payload.username})
 			if (userExist) {
 				console.log("exist", userExist)
-				throw DuplicateError("User with email already exist")
+				throw DuplicateError("User with credentials already exist")
 			}
 			const password = Helper.hashPassword({ password: payload.password })
 			const userDTO = new UserMapper().toPersistence({ ...payload as unknown as User })

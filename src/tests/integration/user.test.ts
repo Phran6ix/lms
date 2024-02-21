@@ -64,7 +64,7 @@ describe("Authentication", () => {
 
 
                 expect(response.status).toBe(400)
-                expect(response.body.message).toBe("User with email already exist")
+                expect(response.body.message).toBe("User with credentials already exist")
             })
 
         })
@@ -90,7 +90,7 @@ describe("Authentication", () => {
 
     afterAll(async () => {
 
-        // await DropCollection('users')
+        await DropCollection('users')
         await mongoose.connection.close()
         server.close()
     })
