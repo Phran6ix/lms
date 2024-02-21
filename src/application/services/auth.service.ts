@@ -19,12 +19,13 @@ export default class AuthService {
 	public async RegisterUser(payload: RegisterUserPayload): Promise<ResponseType> {
 		try {
 			const userExist = await this.repo.findUserByEmail(payload.email)
+			console.log("User Exist", userExist)
 			if (userExist) {
 				throw DuplicateError("User with email already exist")
 			}
 			const password = Helper.hashPassword({ password: payload.password })
 			const userDTO = new UserMapper().toPersistence({ ...payload as unknown as User })
-
+console.log("result of dto", userDTO)
 			const newUser = await this.repo.createUser({ ...userDTO, password })
 
 			const emailPayload: TEmailPayload = {
@@ -34,7 +35,8 @@ export default class AuthService {
 				name: newUser.firstname + " " + newUser.lastname
 			}
 			// await this.email.sendEmail({ ...emailPayload })
-			events.emit("sendEmail", emailPayload)
+			// events.emit("sendEmail", emailPayload)
+			console.log("SErvice Over")
 			return {
 				code: 201,
 				message: "User has been created successfully",

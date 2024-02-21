@@ -19,6 +19,8 @@ services:
       - db-data:/data-db
     networks:
         - test
+    ports: 
+      - "27017:27017"
 
 volumes:
   db-data:

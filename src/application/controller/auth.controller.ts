@@ -16,24 +16,28 @@ export default class AuthController extends BaseController {
 		this.res = res;
 		this.next = next;
 
-		this.service = new AuthService(new UserRepository(userModel), new SMTPExpress())
+		this.service = new AuthService(new UserRepository(userModel))
 	}
 
-	public async HTTPRegisterUser(): Promise<Response> {
+	public async HTTPRegisterUser(): Promise<Response | void> {
 		try {
+			console.log("Request",this.req.body)
 			const payload = RegisterUserPayload.safeParse(this.req.body)
 			if (!payload.success) {
+
 				throw new HTTPException(`Invalid input ${payload.error}`, 400)
 			}
+
+			console.log("Register Signup payload", payload.data)
 			const service = await this.service.RegisterUser(payload.data)
 			return this.sendResponse(service)
 		} catch (error) {
 			console.log("An Error occured here", error)
-			return this.sendErrorResponse(error)
+			return this.sendErrorResponse(error);
 		}
 	}
 
-	public async HTTPUserSign(): Promise<Response> {
+	public async HTTPUserSign(): Promise<Response | void> {
 		try {
 			const payload = UserSignInPayload.safeParse(this.req.body)
 			if (!payload.success) {
@@ -43,11 +47,11 @@ export default class AuthController extends BaseController {
 			const login = await this.service.UserSignIn(payload.data)
 			return this.sendResponse(login)
 		} catch (error) {
-			return this.sendErrorResponse(error)
+			return this.sendErrorResponse(error);
 		}
 	}
 
-	public async HTTPChangePassword(): Promise<Response> {
+	public async HTTPChangePassword(): Promise<Response | void> {
 		try {
 			const payload = ChangePasswordPayload.safeParse(this.req.body)
 			if (!payload.success) {
@@ -58,7 +62,8 @@ export default class AuthController extends BaseController {
 
 			return this.sendResponse(response)
 		} catch (error) {
-			return this.sendErrorResponse(error)
+
+			return this.sendErrorResponse(error);
 		}
 	}
 }

@@ -18,9 +18,10 @@ declare global {
 }
 export default class ExpressApplication {
     constructor() {
+        this.app.use(express.json())
         this.middleWares()
         this.startRoutes()
-        this.errorHandler()
+        // this.errorHandler()
         // connectMongoose()
 
         // this.startApp()
@@ -58,7 +59,7 @@ export default class ExpressApplication {
     }
 
     middleWares() {
-        this.app.use(express.json())
+        // this.app.use(express.json())
         this.app.use(cors())
     }
 

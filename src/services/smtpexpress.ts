@@ -28,8 +28,7 @@ class SMTPExpress extends BaseEmailService implements IEmailService {
             }
          }
 
-         const message = await this.mailclient.sendApi.sendMail(mailOptions)
-         console.log("sendapi", message)
+         this.mailclient.sendApi.sendMail(mailOptions)
          return
       } catch (error) {
          throw error
