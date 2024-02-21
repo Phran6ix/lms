@@ -41,10 +41,7 @@ describe("Authentication", () => {
 
         test("it should return 201 for valid inputs ", async () => {
             const newUser = CreateUserObject()
-            console.log("NewUser", newUser)
             const response = await supertest(app).post("/v1/auth/register").set("content-Type", "application/json").send({ ...newUser })
-            console.log("existing users ===> ",)
-            console.log("Sign up esponse", response.status, response.body,)
             // expect(SMTPExpress.prototype.sendEmail).toHaveBeenCalled()
             expect(response.status).toBe(201)
         })
@@ -85,7 +82,6 @@ describe("Authentication", () => {
             const payload = {}
 
             const response = await supertest(app).post(signInUrl).set("Content-Type", "application/json").send({})
-            console.log("No inut sign in, ", response.body)
             expect(response.status).toBe(400)
         })
     })

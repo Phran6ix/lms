@@ -21,7 +21,6 @@ export class UserRepository implements IUserRepo {
 	}
 	async findUserByEmailOrUsername(data: { email?: string, username?: string }): Promise<User | null> {
 		try {
-			console.log("here;s payload", data)
 			const user = await this.model.findOne({ $or: [{ userName: data.username }, { email: data.email }] })
 
 			return !!user ? new UserMapper().toDomain(user) : null
@@ -39,19 +38,15 @@ export class UserRepository implements IUserRepo {
 	}
 	async createUser(user: Partial<IUser>): Promise<User> {
 		try {
-			console.log("the expected", user)
 			const newUser = await this.model.create({ ...user })
-			console.log("the result", newUser)
 			return new UserMapper().toDomain(newUser)
 		} catch (error) {
-			console.log("the error result", error)
 			throw error
 		}
 	}
 	async findUserByEmail(email: string): Promise<User | null> {
 		try {
 			const user = await this.model.findOne({ email }).lean()
-			console.log("MY USer wey dey stress", user)
 			return !!user ? new UserMapper().toDomain(user) : null
 		} catch (error) {
 			throw error
