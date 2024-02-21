@@ -20,6 +20,7 @@ export default class AuthService {
 		try {
 			const userExist = await this.repo.findUserByEmailOrUsername({email: payload.email, username: payload.username})
 			if (userExist) {
+				console.log("exist", userExist)
 				throw DuplicateError("User with email already exist")
 			}
 			const password = Helper.hashPassword({ password: payload.password })

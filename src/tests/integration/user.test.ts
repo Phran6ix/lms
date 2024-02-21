@@ -41,7 +41,9 @@ describe("Authentication", () => {
 
         test("it should return 201 for valid inputs ", async () => {
             const newUser = CreateUserObject()
-            const response = await supertest(app).post("/v1/auth/register").set("content-Type", "application/json").send({ ...newUser })
+            console.log('newuse', newUser)
+            const response = await supertest(app).post("/v1/auth/register").set("content-Type", "application/json").send(newUser)
+            console.log("Sign up esponse", response.status, response.body,)
             // expect(SMTPExpress.prototype.sendEmail).toHaveBeenCalled()
             expect(response.status).toBe(201)
         })
