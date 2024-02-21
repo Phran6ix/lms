@@ -25,9 +25,10 @@ export default class AuthController extends BaseController {
 			const payload = RegisterUserPayload.safeParse(this.req.body)
 			if (!payload.success) {
 
-			console.log("Register Signup payload", payload.error)
 				throw new HTTPException(`Invalid input ${payload.error}`, 400)
 			}
+
+			console.log("Register Signup payload", payload.data)
 			const service = await this.service.RegisterUser(payload.data)
 			return this.sendResponse(service)
 		} catch (error) {

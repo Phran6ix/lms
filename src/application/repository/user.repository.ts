@@ -30,9 +30,10 @@ export class UserRepository implements IUserRepo {
 		try {
 			console.log("the expected", user)
 			const newUser = await this.model.create({ ...user })
-
+console.log("the result", newUser)
 			return new UserMapper().toDomain(newUser)
 		} catch (error) {
+console.log("the error result", error)
 			throw error
 		}
 	}

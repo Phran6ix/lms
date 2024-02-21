@@ -25,7 +25,7 @@ export default class AuthService {
 			}
 			const password = Helper.hashPassword({ password: payload.password })
 			const userDTO = new UserMapper().toPersistence({ ...payload as unknown as User })
-
+console.log("result of dto", userDTO)
 			const newUser = await this.repo.createUser({ ...userDTO, password })
 
 			const emailPayload: TEmailPayload = {
@@ -35,7 +35,7 @@ export default class AuthService {
 				name: newUser.firstname + " " + newUser.lastname
 			}
 			// await this.email.sendEmail({ ...emailPayload })
-			events.emit("sendEmail", emailPayload)
+			// events.emit("sendEmail", emailPayload)
 			console.log("SErvice Over")
 			return {
 				code: 201,
