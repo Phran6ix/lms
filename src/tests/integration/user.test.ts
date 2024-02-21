@@ -40,7 +40,7 @@ describe("Authentication", () => {
         })
 
         test("it should return 201 for valid inputs ", async () => {
-            const newUser = CreateUserObject({ email: 'emailcorect@gmail.com' })
+            const newUser = CreateUserObject()
             console.log("NewUser", newUser)
             const response = await supertest(app).post("/v1/auth/register").set("content-Type", "application/json").send({ ...newUser })
             console.log("existing users ===> ",)
@@ -51,7 +51,6 @@ describe("Authentication", () => {
 
         describe("Duplicate user", () => {
             test("it should return 400 if email already exists", async () => {
-                console.log("Alreadyuser", users)
                 const userObj = CreateUserObject({ email: users.email })
                 const response = await supertest(app).post("/v1/auth/register").set("Content-Type", "application/json").send(userObj)
 
@@ -60,10 +59,10 @@ describe("Authentication", () => {
             })
 
             test("it should return 400 if username already exists", async () => {
-                console.log("Alreadyuser", users)
-                const userObj = CreateUserObject({ username: users.username })
+                const userObj = CreateUserObject({ username: users.userName })
 
                 const response = await supertest(app).post("/v1/auth/register").set("Content-Type", "application/json").send(userObj)
+
 
                 expect(response.status).toBe(400)
                 expect(response.body.message).toBe("User with email already exist")

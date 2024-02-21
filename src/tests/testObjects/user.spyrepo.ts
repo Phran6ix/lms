@@ -8,6 +8,15 @@ export class UserSpyRepo implements IUserRepo {
     constructor(users: User[]) {
         this.users = users
     }
+    findUserByEmailOrUsername(payload: { email?: string | undefined; username?: string | undefined; }): Promise<User | null> {
+        const user = this.users.find(users => users.email == payload.email || users.username == payload.username)
+
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(user ? user : null)
+            }, 300)
+        })
+    }
     createUser(user: User): Promise<any> {
         try {
             return new Promise((resolve, reject) => {

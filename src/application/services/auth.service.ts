@@ -18,7 +18,7 @@ export default class AuthService {
 
 	public async RegisterUser(payload: RegisterUserPayload): Promise<ResponseType> {
 		try {
-			const userExist = await this.repo.findUserByEmail(payload.email)
+			const userExist = await this.repo.findUserByEmailOrUsername({email: payload.email, username: payload.username})
 			console.log("User Exist", userExist)
 			if (userExist) {
 				throw DuplicateError("User with email already exist")

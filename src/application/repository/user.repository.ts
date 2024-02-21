@@ -8,6 +8,7 @@ export interface IUserRepo {
 	createUser(user: Partial<IUser>): Promise<User>;
 	findUserByEmail(email: string): Promise<User | null>
 	findUserByUsername(username: string): Promise<User | null>
+	findUserByEmailOrUsername(payload: { email?: string, username?: string }): Promise<User | null>
 	findUserById(id: string): Promise<User>
 	fetchAllUser(filter: Partial<IUser>): Promise<User[]>
 	deleteUser(id: string): Promise<void>
@@ -17,6 +18,16 @@ export class UserRepository implements IUserRepo {
 	model: Model<IUser>
 	constructor(model: Model<IUser>) {
 		this.model = model
+	}
+	async findUserByEmailOrUsername(data: { email?: string, username?: string }): Promise<User | null> {
+		try {
+			console.log("here;s payload", data)
+			const user = await this.model.findOne({ $or: [{ userName: data.username }, { email: data.email }] })
+
+			return !!user ? new UserMapper().toDomain(user) : null
+		} catch (error) {
+			throw error
+		}
 	}
 	async updateUser(id: string, payload: Partial<IUser>): Promise<User> {
 		try {
@@ -30,17 +41,17 @@ export class UserRepository implements IUserRepo {
 		try {
 			console.log("the expected", user)
 			const newUser = await this.model.create({ ...user })
-console.log("the result", newUser)
+			console.log("the result", newUser)
 			return new UserMapper().toDomain(newUser)
 		} catch (error) {
-console.log("the error result", error)
+			console.log("the error result", error)
 			throw error
 		}
 	}
 	async findUserByEmail(email: string): Promise<User | null> {
 		try {
 			const user = await this.model.findOne({ email }).lean()
-console.log("MY USer wey dey stress", user)
+			console.log("MY USer wey dey stress", user)
 			return !!user ? new UserMapper().toDomain(user) : null
 		} catch (error) {
 			throw error
