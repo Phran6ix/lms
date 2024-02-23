@@ -20,7 +20,6 @@ export default class AuthService {
 		try {
 			const userExist = await this.repo.findUserByEmailOrUsername({email: payload.email, username: payload.username})
 			if (userExist) {
-				console.log("exist", userExist)
 				throw DuplicateError("User with credentials already exist")
 			}
 			const password = Helper.hashPassword({ password: payload.password })
@@ -47,15 +46,15 @@ export default class AuthService {
 	public async UserSignIn(payload: UserSignInPayload): Promise<ResponseType> {
 		try {
 			let user: User | null
-			if (payload.email) {
-				user = await this.repo.findUserByEmail(payload.email)
-			}
-			else if (payload.username) {
-				user = await this.repo.findUserByUsername(payload.username)
+			if (payload.identifier.includes("@")) {
+				user = await this.repo.findUserByEmail(payload.identifier)
 			}
 			else {
-				throw new HTTPException("Email and Username field cannot be empty", 400)
+				user = await this.repo.findUserByUsername(payload.identifier)
 			}
+			// else {
+			// 	throw new HTTPException("Email and Username field cannot be empty", 400)
+			// }
 
 			if (!user) {
 				throw new HTTPException("User does not exist", 404)

@@ -18,13 +18,23 @@ export const RegisterUserPayload = z.object({
 
 export type RegisterUserPayload = z.TypeOf<typeof RegisterUserPayload>
 
+const emailCheck = z.string().email()
+const usernameCheck = z.string().min(5)
 
 export const UserSignInPayload = z.object({
-    email: z.string().email().optional(),
-    username: z.string().optional(),
+    identifier: z.string(), 
     password: z.string()
 })
 
+export const LoginPayload = UserSignInPayload.extend({
+    identifier: z.string().refine(val => {
+        if (val.includes("@")) {
+            return emailCheck.safeParse(val).success
+        }else {
+            return usernameCheck.safeParse(val).success
+        }
+    }, {message: "Invalid input"})
+})
 export type UserSignInPayload = z.TypeOf<typeof UserSignInPayload>
 
 export const ChangePasswordPayload = z.object({

@@ -3,7 +3,7 @@ import AuthService from "../services/auth.service";
 import { UserRepository } from "../repository/user.repository";
 import BaseController from "../../common/BaseController";
 import userModel from "../database/userModel";
-import { ChangePasswordPayload, RegisterUserPayload, UserSignInPayload } from "../../validations/user.validation";
+import { ChangePasswordPayload, LoginPayload, RegisterUserPayload, UserSignInPayload } from "../../validations/user.validation";
 import HTTPException from "../../utils/exception";
 import SMTPExpress from "../../services/smtpexpress";
 
@@ -36,7 +36,7 @@ export default class AuthController extends BaseController {
 
 	public async HTTPUserSign(): Promise<Response | void> {
 		try {
-			const payload = UserSignInPayload.safeParse(this.req.body)
+			const payload = LoginPayload.safeParse(this.req.body)
 			if (!payload.success) {
 				throw new HTTPException(`Invalid input - ${payload.error}`, 400)
 			}

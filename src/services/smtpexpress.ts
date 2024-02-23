@@ -12,8 +12,6 @@ class SMTPExpress extends BaseEmailService implements IEmailService {
 
    }
    public async sendEmail(payload: TEmailPayload): Promise<void> {
-      console.log("payload", payload)
-      console.log("sender deets", Constant.SENDER_NAME, Constant.SENDER_EMAIL)
       try {
          const mailOptions: SendMailOptions = {
             subject: payload.subject,
