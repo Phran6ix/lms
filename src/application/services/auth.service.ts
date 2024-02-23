@@ -18,14 +18,12 @@ export default class AuthService {
 
 	public async RegisterUser(payload: RegisterUserPayload): Promise<ResponseType> {
 		try {
-			const userExist = await this.repo.findUserByEmail(payload.email)
-			console.log("User Exist", userExist)
+			const userExist = await this.repo.findUserByEmailOrUsername({email: payload.email, username: payload.username})
 			if (userExist) {
-				throw DuplicateError("User with email already exist")
+				throw DuplicateError("User with credentials already exist")
 			}
 			const password = Helper.hashPassword({ password: payload.password })
 			const userDTO = new UserMapper().toPersistence({ ...payload as unknown as User })
-console.log("result of dto", userDTO)
 			const newUser = await this.repo.createUser({ ...userDTO, password })
 
 			const emailPayload: TEmailPayload = {
@@ -36,7 +34,6 @@ console.log("result of dto", userDTO)
 			}
 			// await this.email.sendEmail({ ...emailPayload })
 			// events.emit("sendEmail", emailPayload)
-			console.log("SErvice Over")
 			return {
 				code: 201,
 				message: "User has been created successfully",
@@ -49,15 +46,15 @@ console.log("result of dto", userDTO)
 	public async UserSignIn(payload: UserSignInPayload): Promise<ResponseType> {
 		try {
 			let user: User | null
-			if (payload.email) {
-				user = await this.repo.findUserByEmail(payload.email)
-			}
-			else if (payload.username) {
-				user = await this.repo.findUserByUsername(payload.username)
+			if (payload.identifier.includes("@")) {
+				user = await this.repo.findUserByEmail(payload.identifier)
 			}
 			else {
-				throw new HTTPException("Email and Username field cannot be empty", 400)
+				user = await this.repo.findUserByUsername(payload.identifier)
 			}
+			// else {
+			// 	throw new HTTPException("Email and Username field cannot be empty", 400)
+			// }
 
 			if (!user) {
 				throw new HTTPException("User does not exist", 404)

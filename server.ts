@@ -12,6 +12,5 @@ const server = new ExpressApplication()
 
 export const app = server.getApp()
 if (process.env.NODE_ENV != Constant.NODE_ENV['TESTING']) {
-  console.log("Not in the tesst env")
   server.startApp()
 }

@@ -22,7 +22,7 @@ describe("Authentication", () => {
         await InsertDocuments('users', [users])
     })
 
-    
+
 
     jest.mock("../../services/smtpexpress", () => {
         return jest.fn().mockImplementation(() => {
@@ -40,33 +40,29 @@ describe("Authentication", () => {
         })
 
         test("it should return 201 for valid inputs ", async () => {
-            const newUser = CreateUserObject({ email: 'emailcorect@gmail.com' })
-            console.log("NewUser", newUser)
-            const response = await supertest(app).post("/v1/auth/register").set("content-Type", "application/json").send({ ...newUser })
-            console.log("existing users ===> ",)
-            console.log("Sign up esponse", response.status, response.body,)
+            const newUser = CreateUserObject()
+            const response = await supertest(app).post("/v1/auth/register").set("content-Type", "application/json").send(newUser)
             // expect(SMTPExpress.prototype.sendEmail).toHaveBeenCalled()
             expect(response.status).toBe(201)
         })
 
         describe("Duplicate user", () => {
             test("it should return 400 if email already exists", async () => {
-                console.log("Alreadyuser", users)
                 const userObj = CreateUserObject({ email: users.email })
                 const response = await supertest(app).post("/v1/auth/register").set("Content-Type", "application/json").send(userObj)
 
                 expect(response.status).toBe(400)
-                expect(response.body.message).toBe("User with email already exist")
+                expect(response.body.message).toBe("User with credentials already exist")
             })
 
             test("it should return 400 if username already exists", async () => {
-                console.log("Alreadyuser", users)
-                const userObj = CreateUserObject({ username: users.username })
+                const userObj = CreateUserObject({ username: users.userName })
 
                 const response = await supertest(app).post("/v1/auth/register").set("Content-Type", "application/json").send(userObj)
 
+
                 expect(response.status).toBe(400)
-                expect(response.body.message).toBe("User with email already exist")
+                expect(response.body.message).toBe("User with credentials already exist")
             })
 
         })
@@ -75,10 +71,16 @@ describe("Authentication", () => {
 
     describe("user sign in", () => {
         const signInUrl = "/v1/auth/login"
+        let seedUser: Omit<IUser, "id">
+        beforeAll(async () => {
+            seedUser = SeedUser()
+            await InsertDocuments('users', [seedUser])
+        })
         test("it should return a 400 for invalid email", async () => {
-            const payload = { email: "incorrectemail", password: "password" }
+            const payload = { identifier: "incorrectemail@", password: "password" }
 
             const response = await supertest(app).post(signInUrl).set("Content-Type", "application/json").send(payload)
+
             expect(response.status).toBe(400)
         })
 
@@ -86,14 +88,20 @@ describe("Authentication", () => {
             const payload = {}
 
             const response = await supertest(app).post(signInUrl).set("Content-Type", "application/json").send({})
-            console.log("No inut sign in, ", response.body)
+            expect(response.status).toBe(400)
+        })
+
+        test("it should return 400 if there is no username or email", async () => {
+            const payload = {password: "password"}
+            const response = await supertest(app).post(signInUrl).set("Content-Type","application/json").send(payload)
+
             expect(response.status).toBe(400)
         })
     })
 
     afterAll(async () => {
 
-        // await DropCollection('users')
+        await DropCollection('users')
         await mongoose.connection.close()
         server.close()
     })

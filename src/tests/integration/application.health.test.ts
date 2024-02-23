@@ -15,10 +15,8 @@ describe("Application", () => {
         return { server }
     })
     test("It returns 200 if application is running", async () => {
-        console.log("test 1")
         const response = await supertest(app).get("/api/health_check")
 
-        console.log(response.status)
         expect(response.status).toBe(200)
     })
 
